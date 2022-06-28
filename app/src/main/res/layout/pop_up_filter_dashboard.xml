@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:multi_line_radio_group="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    app:cardCornerRadius="10dp"
+    android:layout_height="320dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="@color/black"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_filter"
+                android:layout_height="wrap_content"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Filter options"
+                android:textColor="@color/white"
+                style="@style/viewParent.headerText"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:fontFamily="@font/calibri_regular"
+            android:text="Gender"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:padding="5dp"
+                android:id="@+id/rg_gender"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Male"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/radio_selector"
+                    android:textColor="@drawable/text_color"
+                    android:elevation="4dp"
+                    android:padding="10dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"/>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:text="Female"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/radio_selector"
+                    android:textColor="@drawable/text_color"
+                    android:elevation="4dp"
+                    android:padding="10dp"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:fontFamily="@font/calibri_regular"
+            android:text="Age Group"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:id="@+id/rg_age_male"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 10"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 12"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 14"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 18"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Above 18"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                </RadioGroup>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:visibility="visible"
+                    android:id="@+id/rg_age_female"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 10"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 12"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 14"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Under 16"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:text="Above 16"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_color"
+                        android:elevation="4dp"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:layout_height="wrap_content"/>
+
+                </RadioGroup>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+        <TextView
+            android:id="@+id/cirLoginButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:text="Submit" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

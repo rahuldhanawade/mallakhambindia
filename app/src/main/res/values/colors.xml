@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="colorAccent">#ff6600</color>
+    <color name="colorAccentDark">#FF4800</color>
+    <color name="themeColor">#ff6600</color>
+
+    <!--normal colors-->
+    <color name="black">#020000</color>
+
+
+    <!--colors for light mode-->
+    <color name="contentTextColor">#020000</color>
+    <color name="register_bk_color">#ff6600</color>
+    <color name="login_bk_color">#fff</color>
+    <color name="white">#fff</color>
+    <color name="primaryTextColor">#FF4800</color>
+</resources>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:layout_height="match_parent"
+    tools:context=".activity.TeamDetails">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/appbar_menu_teams"
+        android:theme="@style/AppTheme2.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_team_details"
+            app:titleTextColor="@color/white"
+            app:theme="@style/ToolbarStyle"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:popupTheme="@style/AppTheme2.PopupOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/appbar_menu_teams"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="3"
+                android:layout_margin="10dp"
+                android:layout_alignParentTop="true"
+                android:elevation="3dp"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="7"
+                            android:gravity="center"
+                            android:textSize="30sp"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="Matches"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="4"
+                            android:gravity="center"
+                            android:textSize="30sp"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="Wins"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="10dp"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="3"
+                            android:gravity="center"
+                            android:textSize="30sp"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            style="@style/TitleTextStyle"
+                            android:text="Loses"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/dashboard_background"
+                android:id="@+id/linear_main"
+                android:layout_marginTop="50dp"
+                android:paddingTop="50dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TitleTextStyle"
+                    android:text="Team Members"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20sp"
+                    android:layout_height="wrap_content"/>
+
+                <include layout="@layout/item_player"/>
+                <include layout="@layout/item_player"/>
+                <include layout="@layout/item_player"/>
+                <include layout="@layout/item_player"/>
+                <include layout="@layout/item_player"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
