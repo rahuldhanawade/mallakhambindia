@@ -62,7 +62,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="Group Name :"
+                        android:text="Player Name :"
                         android:textStyle="bold"
                         style="@style/TitleTextStyle"
                         android:layout_height="wrap_content"/>
@@ -92,7 +92,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Total Played :"
+                            android:text="Total Score :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -110,6 +110,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="6"
+                        android:visibility="invisible"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
 
@@ -146,7 +147,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Wins :"
+                            android:text="Judge 1 Score :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -168,7 +169,59 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Loses :"
+                            android:text="Judge 2 Score :"
+                            android:textStyle="bold"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="2"
+                            android:textColor="@color/colorAccent"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Judge 3 Score :"
+                            android:textStyle="bold"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="7"
+                            android:textColor="@color/colorAccent"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="6"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="Judge 4 Score :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>

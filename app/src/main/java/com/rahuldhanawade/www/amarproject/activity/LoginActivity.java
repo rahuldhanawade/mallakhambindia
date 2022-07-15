@@ -1,4 +1,4 @@
-package com.rahuldhanawade.www.amarproject;
+package com.rahuldhanawade.www.amarproject.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.rahuldhanawade.www.amarproject.activity.HomeActivity;
+import com.rahuldhanawade.www.amarproject.R;
 
 public class LoginActivity extends AppCompatActivity {
 

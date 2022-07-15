@@ -68,7 +68,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Group Name :"
+                            android:text="Team Name :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -123,123 +123,15 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Captain :"
+                            android:text="Gender :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Amar T."
+                            android:text="Female/Male"
                             android:id="@+id/tv_rsa_km"
-                            android:textColor="@color/colorAccent"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="10"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="4"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Wins :"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_pa_ten"
-                            android:text="4"
-                            android:textColor="@color/colorAccent"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="6"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Loses :"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_pa_sum"
-                            android:text="2"
-                            android:textColor="@color/colorAccent"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:weightSum="10"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="4"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Ties :"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_hc_tenure"
-                            android:text="1"
-                            android:textColor="@color/colorAccent"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="6"
-                        android:orientation="horizontal"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:text="Total Played :"
-                            android:textStyle="bold"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:id="@+id/tv_hc_sum"
-                            android:text="7"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>

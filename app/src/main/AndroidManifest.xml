@@ -33,13 +33,13 @@
             android:name=".activity.TeamDetails"
             android:exported="false" />
         <activity
-            android:name=".activity.ListActivity"
+            android:name=".activity.ScoreForm"
             android:exported="false" />
         <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="false"/>
     </application>
 

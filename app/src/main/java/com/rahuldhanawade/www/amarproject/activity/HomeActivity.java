@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         linear_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, ListActivity.class);
+                Intent i = new Intent(HomeActivity.this, TeamDetails.class);
                 startActivity(i);
             }
         });

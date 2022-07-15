@@ -7,7 +7,7 @@
     android:background="@color/login_bk_color"
     android:focusableInTouchMode="true"
     android:layout_gravity="center"
-    tools:context=".LoginActivity">
+    tools:context=".activity.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,11 +33,11 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/calibri_regular"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="23sp"
                     android:textStyle="bold"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Already \nhave an \nAccount?" />
+                    android:text="Bhausaheb Ranade Navodit Mallakhamb Competition 2022" />
 
                 <ImageView
                     android:layout_width="0dp"
@@ -83,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_man_user"
-                            android:hint="Registered E-mail or Mobile No. *"
+                            android:hint="User Name *"
                             android:drawablePadding="10dp"
                             android:imeOptions="actionDone"
                             android:fontFamily="@font/calibri_regular"
@@ -97,7 +97,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:hintEnabled="false"
-                        android:layout_margin="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="20dp"
                         app:boxStrokeColor="@color/colorAccent"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         app:passwordToggleEnabled="true">
@@ -116,16 +119,6 @@
                             android:textSize="14sp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        style="@style/viewParent"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="Forgot Password?"
-                        android:fontFamily="@font/calibri_regular"
-                        android:textColor="@color/primaryTextColor"
-                        android:textSize="15sp" />
 
                 </LinearLayout>
 
@@ -155,14 +148,36 @@
                     android:layout_weight="3"
                     android:background="@color/colorPrimaryDark" />
 
-                <TextView
-                    style="@style/viewParent.headerText.NoMode"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_weight="6"
-                    android:text="\@Copyright by 2017 Mallakhamb India."
-                    android:textAlignment="center"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/viewParent.headerText.NoMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="\@Copyright by "
+                        android:textSize="12sp" />
+
+                    <TextView
+                        style="@style/viewParent.headerText.NoMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2022"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        style="@style/viewParent.headerText.NoMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" Mallakhamb India."
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="0dp"

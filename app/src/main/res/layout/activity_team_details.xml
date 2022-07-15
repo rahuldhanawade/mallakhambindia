@@ -68,7 +68,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             style="@style/TitleTextStyle"
-                            android:text="Matches"
+                            android:text="Total Player"
                             android:textColor="@color/colorAccent"
                             android:gravity="center"
                             android:textSize="20sp"
@@ -93,7 +93,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             style="@style/TitleTextStyle"
-                            android:text="4"
+                            android:text="F/M"
                             android:gravity="center"
                             android:textSize="30sp"
                             android:layout_height="wrap_content"/>
@@ -101,7 +101,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             style="@style/TitleTextStyle"
-                            android:text="Wins"
+                            android:text="Gender"
                             android:textColor="@color/colorAccent"
                             android:gravity="center"
                             android:textSize="20sp"
@@ -126,7 +126,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             style="@style/TitleTextStyle"
-                            android:text="3"
+                            android:text="U-16"
                             android:gravity="center"
                             android:textSize="30sp"
                             android:layout_height="wrap_content"/>
@@ -134,7 +134,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             style="@style/TitleTextStyle"
-                            android:text="Loses"
+                            android:text="Age Group"
                             android:textColor="@color/colorAccent"
                             android:gravity="center"
                             android:textSize="20sp"
@@ -158,13 +158,9 @@
                 android:paddingRight="10dp"
                 android:layout_height="match_parent">
 
-                <TextView
+                <View
                     android:layout_width="match_parent"
-                    style="@style/TitleTextStyle"
-                    android:text="Team Members"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20sp"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="25dp"/>
 
                 <include layout="@layout/item_player"/>
                 <include layout="@layout/item_player"/>

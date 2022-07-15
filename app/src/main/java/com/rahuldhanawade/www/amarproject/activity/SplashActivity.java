@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.rahuldhanawade.www.amarproject.LoginActivity;
 import com.rahuldhanawade.www.amarproject.R;
 
 public class SplashActivity extends AppCompatActivity {
