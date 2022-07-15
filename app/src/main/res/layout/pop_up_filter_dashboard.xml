@@ -6,7 +6,7 @@
     xmlns:multi_line_radio_group="http://schemas.android.com/tools"
     android:layout_gravity="center"
     app:cardCornerRadius="10dp"
-    android:layout_height="320dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,42 +45,75 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
 
-        <HorizontalScrollView
+<!--        <HorizontalScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <RadioGroup-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:padding="5dp"-->
+<!--                android:id="@+id/rg_gender"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:layout_height="wrap_content">-->
+
+<!--                <RadioButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:text="Male"-->
+<!--                    android:button="@android:color/transparent"-->
+<!--                    android:background="@drawable/radio_selector"-->
+<!--                    android:textColor="@drawable/text_color"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+<!--                <RadioButton-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:text="Female"-->
+<!--                    android:button="@android:color/transparent"-->
+<!--                    android:background="@drawable/radio_selector"-->
+<!--                    android:textColor="@drawable/text_color"-->
+<!--                    android:elevation="4dp"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+<!--            </RadioGroup>-->
+
+<!--        </HorizontalScrollView>-->
+
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="3dp"
             android:layout_height="wrap_content">
 
-            <RadioGroup
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:id="@+id/group_dummy"
                 android:layout_width="match_parent"
-                android:padding="5dp"
-                android:id="@+id/rg_gender"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:tbgFlow="true"
+                app:tbgChildSpacingForLastRow="align"
+                app:tbgRowSpacing="2dp">
 
-                <RadioButton
+                <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:layout_width="wrap_content"
-                    android:text="Male"
-                    android:button="@android:color/transparent"
-                    android:background="@drawable/radio_selector"
-                    android:textColor="@drawable/text_color"
-                    android:elevation="4dp"
-                    android:padding="10dp"
                     android:layout_margin="5dp"
-                    android:layout_height="wrap_content"/>
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Male"/>
 
-                <RadioButton
+                <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:layout_width="wrap_content"
-                    android:text="Female"
-                    android:button="@android:color/transparent"
-                    android:background="@drawable/radio_selector"
-                    android:textColor="@drawable/text_color"
-                    android:elevation="4dp"
-                    android:padding="10dp"
                     android:layout_margin="5dp"
-                    android:layout_height="wrap_content"/>
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Female"/>
 
-            </RadioGroup>
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -92,148 +125,106 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
 
-        <HorizontalScrollView
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="3dp"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:tbgFlow="true"
+                android:visibility="gone"
+                android:id="@+id/rg_age_male"
+                app:tbgChildSpacingForLastRow="align"
+                app:tbgRowSpacing="2dp">
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:padding="5dp"
-                    android:visibility="gone"
-                    android:id="@+id/rg_age_male"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 10"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 10"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 12"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 12"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 14"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 14"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 18"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 18"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Above 18"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Above 18"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
-                </RadioGroup>
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:tbgFlow="true"
+                android:id="@+id/rg_age_female"
+                app:tbgChildSpacingForLastRow="align"
+                app:tbgRowSpacing="2dp">
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:padding="5dp"
-                    android:visibility="visible"
-                    android:id="@+id/rg_age_female"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 10"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 10"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 12"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 12"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 14"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 14"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Under 16"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Under 16"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    app:tbgMarkerColor="@color/colorAccent"
+                    android:layout_height="wrap_content"
+                    android:text="Above 16"/>
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:text="Above 16"
-                        android:button="@android:color/transparent"
-                        android:background="@drawable/radio_selector"
-                        android:textColor="@drawable/text_color"
-                        android:elevation="4dp"
-                        android:padding="10dp"
-                        android:layout_margin="5dp"
-                        android:layout_height="wrap_content"/>
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
-                </RadioGroup>
-
-            </LinearLayout>
-
-        </HorizontalScrollView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/cirLoginButton"
