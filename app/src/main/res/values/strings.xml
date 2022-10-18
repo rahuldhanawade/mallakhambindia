@@ -1,4 +1,19 @@
 <resources>
     <string name="app_name">Mallakhamb India</string>
     <string name="text">Head Lable</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="question_1">All Parts of Pole used</string>
+    <string name="question_2">1 Acrobatic B Part from both sides</string>
+    <string name="question_3">3 Acrobatic, 1 B Part</string>
+    <string name="question_4">1 Vertical Hold</string>
+    <string name="question_5">1 Horizontal Hold</string>
+    <string name="question_6">1 Backward bending position</string>
+    <string name="question_7">At least B Mount</string>
+    <string name="question_8">At least C Dismount</string>
+    <string name="question_9">Hold to Hold Two transition</string>
+    <string name="question_10">Minimum 16 Elements</string>
+
 </resources>

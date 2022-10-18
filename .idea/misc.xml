@@ -3,6 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/drawable-v24/ic_add_img.xml" value="0.142" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/drawable/ic_mic_round.xml" value="0.142" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/drawable/ic_remove.xml" value="0.142" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/activity_home.xml" value="0.1675929884566054" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/activity_login.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/activity_score_form.xml" value="0.25" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/activity_team_details.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/app_bar_home.xml" value="0.22" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/home_layout.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/item_group_list.xml" value="0.20416666666666666" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/nav_header_home.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/pop_up_filter_dashboard.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/layout/pop_up_recog.xml" value="0.1675213675213675" />
+        <entry key="..\:/My Git Projects/mallakhambindia/app/src/main/res/menu/activity_home_drawer.xml" value="0.1675213675213675" />
         <entry key="..\:/Personal/Projects/AmarProject/app/src/main/res/drawable-v24/button_background_blue.xml" value="0.168" />
         <entry key="..\:/Personal/Projects/AmarProject/app/src/main/res/drawable-v24/ic_add_img.xml" value="0.168" />
         <entry key="..\:/Personal/Projects/AmarProject/app/src/main/res/drawable-v24/ic_side_bg.xml" value="0.265" />
@@ -43,7 +57,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -25,6 +25,12 @@ public class TeamDetails extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Mumbai Titans");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         linear_main = findViewById(R.id.linear_main);
         linear_main.setOnClickListener(new View.OnClickListener() {
