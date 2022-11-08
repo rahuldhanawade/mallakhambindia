@@ -79,7 +79,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <EditText
-                            android:id="@+id/EdtEmail_Mobile"
+                            android:id="@+id/Edt_Email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:drawableStart="@drawable/ic_man_user"
