@@ -1,242 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:multi_line_radio_group="http://schemas.android.com/tools"
-    android:layout_gravity="center"
-    app:cardCornerRadius="10dp"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@color/black"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_filter"
+            android:layout_height="wrap_content"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Filter options"
+            android:textColor="@color/white"
+            style="@style/viewParent.headerText"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:fontFamily="@font/calibri_regular"
+        android:text="Gender"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_margin="3dp"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+            android:id="@+id/group_gender"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            android:background="@color/black"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:tbgFlow="true"
+            app:tbgChildSpacingForLastRow="align"
+            app:tbgRowSpacing="2dp">
 
-            <ImageView
+            <com.nex3z.togglebuttongroup.button.LabelToggle
                 android:layout_width="wrap_content"
-                android:src="@drawable/ic_filter"
+                android:id="@+id/lt_male"
+                android:layout_margin="5dp"
+                app:tbgMarkerColor="@color/colorAccent"
                 android:layout_height="wrap_content"
-                app:tint="@color/white" />
+                android:text="Male"/>
 
-            <TextView
+            <com.nex3z.togglebuttongroup.button.LabelToggle
                 android:layout_width="wrap_content"
-                android:text="Filter options"
-                android:textColor="@color/white"
-                style="@style/viewParent.headerText"
-                android:layout_height="wrap_content"/>
+                android:layout_margin="5dp"
+                android:id="@+id/lt_female"
+                app:tbgMarkerColor="@color/colorAccent"
+                android:layout_height="wrap_content"
+                android:text="Female"/>
 
-        </LinearLayout>
+        </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:fontFamily="@font/calibri_regular"
+        android:text="Age Group"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="3dp"
+        android:layout_height="wrap_content">
+
+        <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:tbgFlow="true"
+            android:id="@+id/rg_group_gender"
+            app:tbgChildSpacingForLastRow="align"
+            app:tbgRowSpacing="2dp">
+
+<!--            <com.nex3z.togglebuttongroup.button.LabelToggle-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                app:tbgMarkerColor="@color/colorAccent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Under 10"/>-->
+
+<!--            <com.nex3z.togglebuttongroup.button.LabelToggle-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                app:tbgMarkerColor="@color/colorAccent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Under 12"/>-->
+
+<!--            <com.nex3z.togglebuttongroup.button.LabelToggle-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                app:tbgMarkerColor="@color/colorAccent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Under 14"/>-->
+
+<!--            <com.nex3z.togglebuttongroup.button.LabelToggle-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                app:tbgMarkerColor="@color/colorAccent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Under 16"/>-->
+
+<!--            <com.nex3z.togglebuttongroup.button.LabelToggle-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                app:tbgMarkerColor="@color/colorAccent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Above 16"/>-->
+
+        </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="match_parent"
-            android:fontFamily="@font/calibri_regular"
-            android:text="Gender"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"/>
-
-<!--        <HorizontalScrollView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--            <RadioGroup-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:padding="5dp"-->
-<!--                android:id="@+id/rg_gender"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <RadioButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Male"-->
-<!--                    android:button="@android:color/transparent"-->
-<!--                    android:background="@drawable/radio_selector"-->
-<!--                    android:textColor="@drawable/text_color"-->
-<!--                    android:elevation="4dp"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:layout_height="wrap_content"/>-->
-
-<!--                <RadioButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:text="Female"-->
-<!--                    android:button="@android:color/transparent"-->
-<!--                    android:background="@drawable/radio_selector"-->
-<!--                    android:textColor="@drawable/text_color"-->
-<!--                    android:elevation="4dp"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:layout_margin="5dp"-->
-<!--                    android:layout_height="wrap_content"/>-->
-
-<!--            </RadioGroup>-->
-
-<!--        </HorizontalScrollView>-->
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="3dp"
-            android:layout_height="wrap_content">
-
-            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                android:id="@+id/group_dummy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:tbgFlow="true"
-                app:tbgChildSpacingForLastRow="align"
-                app:tbgRowSpacing="2dp">
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Male"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Female"/>
-
-            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
-
-        </LinearLayout>
+            android:id="@+id/tv_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_balck_background"
+            android:text="Cancel" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:fontFamily="@font/calibri_regular"
-            android:text="Age Group"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:textColor="@color/black"
-            android:layout_height="wrap_content"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="3dp"
-            android:layout_height="wrap_content">
-
-            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:tbgFlow="true"
-                android:visibility="gone"
-                android:id="@+id/rg_age_male"
-                app:tbgChildSpacingForLastRow="align"
-                app:tbgRowSpacing="2dp">
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 10"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 12"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 14"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 18"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Above 18"/>
-
-            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
-
-            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:tbgFlow="true"
-                android:id="@+id/rg_age_female"
-                app:tbgChildSpacingForLastRow="align"
-                app:tbgRowSpacing="2dp">
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 10"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 12"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 14"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Under 16"/>
-
-                <com.nex3z.togglebuttongroup.button.LabelToggle
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    app:tbgMarkerColor="@color/colorAccent"
-                    android:layout_height="wrap_content"
-                    android:text="Above 16"/>
-
-            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/cirLoginButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_filter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_background"
-            android:text="Submit" />
+            android:text="Filter" />
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

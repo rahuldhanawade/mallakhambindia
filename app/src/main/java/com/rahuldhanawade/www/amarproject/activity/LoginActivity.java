@@ -30,6 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.www.amarproject.R;
 import com.rahuldhanawade.www.amarproject.Utils.LoadingDialog;
 import com.rahuldhanawade.www.amarproject.Utils.MyValidator;
+import com.rahuldhanawade.www.amarproject.Utils.UtilitySharedPreferences;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView cirLoginButton;
     EditText Edt_Email,EdtPassword;
     private LoadingDialog loadingDialog;
+    private String TAG = "LoginActivity" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,9 +111,21 @@ public class LoginActivity extends AppCompatActivity {
                         loadingDialog.dismissDialog();
                         Log.d("Response",""+response);
 
-                        DisplayToastSuccess(LoginActivity.this,"Login Successful");
-//                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-//                        startActivity(i);
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            String status = responseObj.getString("success");
+                            if(status.equals("true")){
+                                String token = responseObj.getString("token");
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "login_email", Str_email);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "login_password", Str_password);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
+                                GetUserDetails(token);
+                            }else{
+                                DisplayToastError(LoginActivity.this,"Sorry For the Inconvince please try again later..");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                     }
                 },
@@ -141,6 +155,78 @@ public class LoginActivity extends AppCompatActivity {
                 return map;
             }
         };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetUserDetails(String token) {
+
+        Log.d(TAG, "GetUserDetails: "+token);
+
+        String GetUser_URL = ROOT_URL+"get_user?token="+token;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, GetUser_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            if(responseObj.toString().contains("status")){
+                                String status = responseObj.getString("status");
+                                DisplayToastError(LoginActivity.this,status);
+                            }else if(responseObj.toString().contains("judge")){
+                                JSONObject judgeObj = responseObj.getJSONObject("judge");
+                                String id = judgeObj.getString("id");
+                                String name = judgeObj.getString("name");
+                                String username = judgeObj.getString("username");
+                                String email = judgeObj.getString("email");
+                                String mobile_no = judgeObj.getString("mobile_no");
+
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_id", id);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_name", name);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_username", username);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_email", email);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_mobile_no", mobile_no);
+
+                                DisplayToastSuccess(LoginActivity.this,"Login Successful");
+
+                                Intent i = new Intent(LoginActivity.this,HomeActivity.class);
+                                startActivity(i);
+                                finish();
+
+                            }else{
+                                DisplayToastError(LoginActivity.this,"Sorry For the Inconvince please try again later..");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(LoginActivity.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(LoginActivity.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(LoginActivity.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(LoginActivity.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(LoginActivity.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                });
 
         int socketTimeout = 50000; //30 seconds - change to what you want
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);

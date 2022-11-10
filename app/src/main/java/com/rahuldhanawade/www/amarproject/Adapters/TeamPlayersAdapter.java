@@ -1,0 +1,72 @@
+package com.rahuldhanawade.www.amarproject.Adapters;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.rahuldhanawade.www.amarproject.R;
+import com.rahuldhanawade.www.amarproject.activity.ScoreForm;
+import com.rahuldhanawade.www.amarproject.activity.TeamDetails;
+
+import java.util.ArrayList;
+
+public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.ViewHolder> {
+
+    private Context context;
+    private ArrayList<TeamPlayersPOJO> teamPlayersPOJOArrayList;
+
+    public TeamPlayersAdapter(Context context, ArrayList<TeamPlayersPOJO> teamPlayersPOJOArrayList) {
+        this.context = context;
+        this.teamPlayersPOJOArrayList = teamPlayersPOJOArrayList;
+    }
+
+    @NonNull
+    @Override
+    public TeamPlayersAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(context).inflate(R.layout.item_player, parent, false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TeamPlayersAdapter.ViewHolder holder, int position) {
+        TeamPlayersPOJO lp = teamPlayersPOJOArrayList.get(position);
+        holder.tv_plyr_age.setText(lp.getAge().toString().trim());
+        holder.tv_plyr_name.setText(lp.getParticipant_name().toString().trim());
+    }
+
+    @Override
+    public int getItemCount() {
+        return teamPlayersPOJOArrayList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tv_plyr_age,tv_plyr_name;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_plyr_age = itemView.findViewById(R.id.tv_plyr_age);
+            tv_plyr_name = itemView.findViewById(R.id.tv_plyr_name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int itemPosition = getLayoutPosition();
+                    String player_id = teamPlayersPOJOArrayList.get(itemPosition).getId();
+                    String player_name = teamPlayersPOJOArrayList.get(itemPosition).getParticipant_name();
+                    Log.d("sta",""+player_id);
+                    Intent i = new Intent(context, ScoreForm.class);
+                    i.putExtra("player_id",player_id);
+                    i.putExtra("player_name",player_name);
+                    context.startActivity(i);
+                }
+            });
+        }
+    }
+}

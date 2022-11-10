@@ -35,6 +35,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -150,6 +151,81 @@ public class CommonMethods
 				}
 			}*/
 		return age;
+	}
+
+
+	public static String getCapsSentences(String tagName) {
+		String[] splits = tagName.toLowerCase().split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < splits.length; i++) {
+			String eachWord = splits[i];
+			if (i > 0 && eachWord.length() > 0) {
+				sb.append(" ");
+			}
+			String cap = eachWord.substring(0, 1).toUpperCase()
+					+ eachWord.substring(1);
+			sb.append(cap);
+		}
+		return sb.toString();
+	}
+
+	public static String getDayFromDate(String date, String type){
+
+//			String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
+//			String day          = (String) DateFormat.format("dd",   date); // 20
+//			String monthString  = (String) DateFormat.format("MMM",  date); // Jun
+//			String fullmonthString  = (String) DateFormat.format("MMMM",  date); // July
+//			String monthNumber  = (String) DateFormat.format("MM",   date); // 06
+//			String year         = (String) DateFormat.format("yyyy", date); // 2013
+
+		String finalvalue = "";
+
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+
+		if(type.equals("date")){
+			Date dt1= null;
+			try {
+				dt1 = format1.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			DateFormat format2=new SimpleDateFormat("dd");
+			finalvalue = format2.format(dt1);
+		}else if(type.equals("month")){
+			Date dt1= null;
+			try {
+				dt1 = format1.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			DateFormat format2=new SimpleDateFormat("MMMM");
+			finalvalue = format2.format(dt1);
+		}else if(type.equals("year")){
+			Date dt1= null;
+			try {
+				dt1 = format1.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			DateFormat format2=new SimpleDateFormat("yyyy");
+			finalvalue = format2.format(dt1);
+		}
+
+		return finalvalue;
+	}
+
+	public static String ageCalculor(String date) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String currntdate = sdf.format(new Date());
+		Date date1;
+		Date date2;
+		date1 = sdf.parse(currntdate);
+		date2 = sdf.parse(date);
+		long difference = Math.abs(date1.getTime() - date2.getTime());
+		long differenceDates = difference / (24 * 60 * 60 * 1000);
+		String dayDifference = Long.toString(differenceDates);
+
+		return dayDifference;
 	}
 
 	public static  void hiddenKeyboard(View v, Context con) {
