@@ -1,18 +1,21 @@
 package com.rahuldhanawade.www.amarproject.activity;
 
+import static com.rahuldhanawade.www.amarproject.RestClient.RestClient.ROOT_URL;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastError;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastSuccess;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.checkNullExcHandler;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.getCapsSentences;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,37 +28,65 @@ import android.speech.SpeechRecognizer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.www.amarproject.R;
+import com.rahuldhanawade.www.amarproject.Utils.LoadingDialog;
+import com.rahuldhanawade.www.amarproject.Utils.UtilitySharedPreferences;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 public class ScoreForm extends AppCompatActivity {
 
+    private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
+    String Str_token = "",player_id = "",player_name = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     EditText edt_exec,edt_orig,edt_comments;
+    TextView tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
     TextView tv_diff_comb,tv_comb,tv_final_value,tv_a,tv_b,tv_c;
     ImageView iv_a_minus,iv_a_add,iv_b_minus,iv_b_add,iv_c_minus,iv_c_add,iv_record;
+    boolean isUserNew = true;
     Dialog dialogRecogAud;
-    Switch swt_q1,swt_q2,swt_q3,swt_q4,swt_q5,swt_q6,swt_q7,swt_q8,swt_q9,swt_q10;
     int CombValue = 0, OtherValue = 0;
-    int UnitAValue = 20,UnitBValue = 40,UnitCValue = 60;
+    int MinAValue = 0,MinBValue = 0,MinCValue = 0;
+    int MaxAValue = 0,MaxBValue = 0,MaxCValue = 0;
+    int UnitAValue = 0,UnitBValue = 0,UnitCValue = 0;
+
+    LinearLayout linear_questions;
+    ArrayList<String> marklist = new ArrayList<>();
 
     public static final Integer RecordAudioRequestCode = 1;
 
@@ -66,11 +97,20 @@ public class ScoreForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score_form);
 
+        loadingDialog = new LoadingDialog(ScoreForm.this);
+
+        player_id = getIntent().getStringExtra("player_id");
+        player_name = getIntent().getStringExtra("player_name");
+        team_name = getIntent().getStringExtra("team_name");
+        player_age = getIntent().getStringExtra("player_age");
+        player_gender = getIntent().getStringExtra("player_gender");
+        player_group = getIntent().getStringExtra("player_group");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_score_form);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Team name");
+        actionBar.setTitle(checkNullExcHandler(team_name));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,84 +173,26 @@ public class ScoreForm extends AppCompatActivity {
         init();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void init(){
+
+        tv_plyr_name = findViewById(R.id.tv_plyr_name);
+        tv_plyr_age = findViewById(R.id.tv_plyr_age);
+        tv_plyr_goup = findViewById(R.id.tv_plyr_goup);
+        tv_plyr_gender = findViewById(R.id.tv_plyr_gender);
+
+        tv_plyr_name.setText(getCapsSentences(player_name));
+        tv_plyr_age.setText(player_age);
+        tv_plyr_goup.setText(getCapsSentences(player_group));
+        tv_plyr_gender.setText(getCapsSentences(player_gender));
+
         iv_record = findViewById(R.id.iv_record);
         edt_comments = findViewById(R.id.edt_comments);
         tv_comb = findViewById(R.id.tv_comb);
         tv_diff_comb = findViewById(R.id.tv_diff_comb);
         tv_final_value = findViewById(R.id.tv_final_value);
 
-        swt_q1 = findViewById(R.id.swt_q1);
-        swt_q1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,10);
-            }
-        });
-        swt_q2 = findViewById(R.id.swt_q2);
-        swt_q2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q3 = findViewById(R.id.swt_q3);
-        swt_q3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q4 = findViewById(R.id.swt_q4);
-        swt_q4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q5 = findViewById(R.id.swt_q5);
-        swt_q5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q6 = findViewById(R.id.swt_q6);
-        swt_q6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,10);
-            }
-        });
-        swt_q7 = findViewById(R.id.swt_q7);
-        swt_q7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,10);
-            }
-        });
-        swt_q8 = findViewById(R.id.swt_q8);
-        swt_q8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q9 = findViewById(R.id.swt_q9);
-        swt_q9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,20);
-            }
-        });
-        swt_q10 = findViewById(R.id.swt_q10);
-        swt_q10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setComCalulation(isChecked,10);
-            }
-        });
-        
+        linear_questions = findViewById(R.id.linear_questions);
         edt_exec = findViewById(R.id.edt_exec);
         addTextChageOtherValue(edt_exec,440);
         edt_orig = findViewById(R.id.edt_orig);
@@ -222,8 +204,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_a_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 4;
+                int minValue = MinAValue;
+                int maxValue = MaxAValue;
                 int unitValue = UnitAValue;
 
                 setValueInDifficulty(false,tv_a,minValue,maxValue,unitValue);
@@ -232,8 +214,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_a_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 4;
+                int minValue = MinAValue;
+                int maxValue = MaxAValue;
                 int unitValue = UnitAValue;
 
                 setValueInDifficulty(true,tv_a,minValue,maxValue,unitValue);
@@ -246,8 +228,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_b_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 6;
+                int minValue = MinBValue;
+                int maxValue = MaxBValue;
                 int unitValue = UnitBValue;
 
                 setValueInDifficulty(false,tv_b,minValue,maxValue,unitValue);
@@ -256,8 +238,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_b_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 6;
+                int minValue = MinBValue;
+                int maxValue = MaxBValue;
                 int unitValue = UnitBValue;
 
                 setValueInDifficulty(true,tv_b,minValue,maxValue,unitValue);
@@ -270,8 +252,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_c_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 1;
+                int minValue = MinCValue;
+                int maxValue = MaxCValue;
                 int unitValue = UnitCValue;
 
                 setValueInDifficulty(false,tv_c,minValue,maxValue,unitValue);
@@ -280,8 +262,8 @@ public class ScoreForm extends AppCompatActivity {
         iv_c_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int minValue = 0;
-                int maxValue = 1;
+                int minValue = MinCValue;
+                int maxValue = MaxCValue;
                 int unitValue = UnitCValue;
 
                 setValueInDifficulty(true,tv_c,minValue,maxValue,unitValue);
@@ -310,6 +292,148 @@ public class ScoreForm extends AppCompatActivity {
                 return false;
             }
         });
+
+        UserLogin();
+    }
+
+    private void addQuestionsList() {
+
+        loadingDialog.startLoadingDialog();
+
+        String GETQUE_URL = ROOT_URL+"get_questions";
+
+        Log.d("GETQUE_URL",""+GETQUE_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GETQUE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+                        try {
+                            JSONObject questionlistObj = new JSONObject(response);
+                            String status = questionlistObj.getString("success");
+                            String message = questionlistObj.getString("message");
+                            if(status.equals("true")){
+                                String data = questionlistObj.getString("data");
+                                JSONObject dataObj = new JSONObject(data);
+                                JSONArray questinListArry = dataObj.getJSONArray("data");
+                                for(int i=0; i< questinListArry.length();i++){
+                                    JSONObject data_obj = questinListArry.getJSONObject(i);
+                                    String que_question = data_obj.getString("question");
+                                    String que_marks = data_obj.getString("marks");
+
+                                    que_marks = que_marks.replace("0.","");
+
+                                    int k = i;
+                                    marklist.add("0.0");
+
+                                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                                    View rowView = inflater.inflate(R.layout.question_list_layout, null);
+
+                                    TextView tv_que_name = rowView.findViewById(R.id.tv_que_name);
+                                    TextView tv_que_marks = rowView.findViewById(R.id.tv_que_marks);
+                                    CheckBox chk_ans = rowView.findViewById(R.id.chk_ans);
+
+                                    tv_que_name.setText(que_question);
+                                    tv_que_marks.setText("0."+que_marks);
+
+                                    String finalQue_marks = que_marks;
+
+                                    chk_ans.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                        @Override
+                                        public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                                            setComCalulation(isChecked,Integer.parseInt(finalQue_marks));
+                                            setQuestionListMarkArray(k,isChecked, finalQue_marks);
+                                        }
+                                    });
+
+                                    linear_questions.addView(rowView);
+                                }
+
+                                JSONArray elementArry = dataObj.getJSONArray("element");
+                                for(int k=0; k< elementArry.length();k++){
+                                    JSONObject elementObj = elementArry.getJSONObject(k);
+                                    String element_name = elementObj.getString("element_name");
+                                    String min = elementObj.getString("min");
+                                    String max = elementObj.getString("max");
+                                    String marks = elementObj.getString("marks");
+
+                                    marks = marks.replace("0.","");
+
+                                    if(element_name.equals("A")){
+                                        MinAValue = Integer.parseInt(min);
+                                        MaxAValue = Integer.parseInt(max);
+                                        UnitAValue = Integer.parseInt(marks);
+                                    }else if(element_name.equals("B")){
+                                        MinBValue = Integer.parseInt(min);
+                                        MaxBValue = Integer.parseInt(max);
+                                        UnitBValue = Integer.parseInt(marks);
+                                    }else if(element_name.equals("C")){
+                                        MinBValue = Integer.parseInt(min);
+                                        MaxCValue = Integer.parseInt(max);
+                                        UnitCValue = Integer.parseInt(marks);
+                                    }
+                                }
+                            }else{
+                                DisplayToastError(ScoreForm.this,message);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(ScoreForm.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(ScoreForm.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(ScoreForm.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(ScoreForm.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(ScoreForm.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("gender", player_gender);
+                map.put("age_group", player_group);
+                Log.d("LoginParamas",""+map.toString());
+                return map;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + Str_token);
+                return headers;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void setQuestionListMarkArray(int k, boolean isChecked, String que_marks) {
+
+        if(isChecked){
+            marklist.remove(k);
+            marklist.add(k,"0."+que_marks);
+        }else{
+            marklist.remove(k);
+            marklist.add(k,"0.0");
+        }
+        Log.d(TAG, "setQuestionListMarkArray: "+marklist);
     }
 
     private void setValueInDifficulty(boolean isboolean, TextView textView, int minValue, int maxValue, int unitValue) {
@@ -327,13 +451,13 @@ public class ScoreForm extends AppCompatActivity {
             if(crtValue >= minValue && crtValue < maxValue){
                 crtValue = crtValue + 1;
             }else{
-                Toast.makeText(this, "You can only select min "+minValue+" & max "+maxValue+" value.", Toast.LENGTH_SHORT).show();
+                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
             }
         }else {
             if(crtValue > minValue && crtValue <= maxValue){
                 crtValue = crtValue - 1;
             }else{
-                Toast.makeText(this, "You can only select min "+minValue+" & max "+maxValue+" value.", Toast.LENGTH_SHORT).show();
+                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
             }
         }
 
@@ -378,7 +502,7 @@ public class ScoreForm extends AppCompatActivity {
                 str_value = str_value.replace(".","");
                 if(str_value.length() > 0){
                     if(!(Integer.parseInt(str_value) <= value)){
-                        Toast.makeText(ScoreForm.this, "Please enter valid marks", Toast.LENGTH_SHORT).show();
+                        DisplayToastError(ScoreForm.this,"Please enter valid marks");
                     }
                 }
             }
@@ -461,6 +585,80 @@ public class ScoreForm extends AppCompatActivity {
         dialogRecogAud.show();
     }
 
+    public void UserLogin(){
+
+        String Str_email = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_email");
+        String Str_password = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_password");
+
+        loadingDialog.startLoadingDialog();
+
+        String LOGIN_URL = ROOT_URL+"login";
+
+        Log.d("LOGIN_URL",""+LOGIN_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            String status = responseObj.getString("success");
+                            if(status.equals("true")){
+                                String token = responseObj.getString("token");
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
+                                Str_token = token;
+                                if(isUserNew){
+                                    addQuestionsList();
+                                }else{
+                                   DisplayToastError(getApplicationContext(),"Unser Dev");
+                                }
+                                isUserNew = false;
+                            }else{
+                                DisplayToastError(ScoreForm.this,"Sorry For the Inconvince please try again later..");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(ScoreForm.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(ScoreForm.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(ScoreForm.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(ScoreForm.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(ScoreForm.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("email", Str_email);
+                map.put("password", Str_password);
+                Log.d("LoginParamas",""+map.toString());
+                return map;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
     @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -472,7 +670,7 @@ public class ScoreForm extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == RecordAudioRequestCode && grantResults.length > 0){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                DisplayToastSuccess(ScoreForm.this,"Permission Granted");
             }
         }
     }

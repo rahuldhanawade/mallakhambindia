@@ -135,6 +135,9 @@ public class TeamDetails extends AppCompatActivity {
                                 teamPlayersPOJO.setDob(Playersdataobj.getString("dob"));
                                 teamPlayersPOJO.setAge(Playersdataobj.getString("age"));
                                 teamPlayersPOJO.setCreated_date(Playersdataobj.getString("created_date"));
+                                teamPlayersPOJO.setTeam_name(str_team_name);
+                                teamPlayersPOJO.setGender(str_team_gender);
+                                teamPlayersPOJO.setGroup(str_team_group);
                                 teamPlayersPOJOArrayList.add(teamPlayersPOJO);
 
                             }

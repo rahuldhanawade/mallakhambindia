@@ -169,6 +169,17 @@ public class CommonMethods
 		return sb.toString();
 	}
 
+	public static String checkNullExcHandler(String value){
+
+		String Str_value = "";
+
+		if(value != null && !value.equals("") && !value.equals("null") && !value.equals("undefined")){
+			return value;
+		}else {
+			return Str_value;
+		}
+	}
+
 	public static String getDayFromDate(String date, String type){
 
 //			String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
