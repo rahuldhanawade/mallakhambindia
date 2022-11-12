@@ -55,12 +55,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.rahuldhanawade.www.amarproject.R;
 import com.rahuldhanawade.www.amarproject.Utils.LoadingDialog;
+import com.rahuldhanawade.www.amarproject.Utils.MyValidator;
 import com.rahuldhanawade.www.amarproject.Utils.UtilitySharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -73,10 +75,11 @@ public class ScoreForm extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_token = "",player_id = "",player_name = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String Str_token = "",Str_year = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     EditText edt_exec,edt_orig,edt_comments;
     TextView tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
-    TextView tv_diff_comb,tv_comb,tv_final_value,tv_a,tv_b,tv_c;
+    TextView tv_diff_comb,tv_comb,tv_final_value,tv_a,tv_b,tv_c,tv_submit;
+    TextView tv_a_marks,tv_b_marks,tv_c_marks;
     ImageView iv_a_minus,iv_a_add,iv_b_minus,iv_b_add,iv_c_minus,iv_c_add,iv_record;
     boolean isUserNew = true;
     Dialog dialogRecogAud;
@@ -101,6 +104,7 @@ public class ScoreForm extends AppCompatActivity {
 
         player_id = getIntent().getStringExtra("player_id");
         player_name = getIntent().getStringExtra("player_name");
+        team_id = getIntent().getStringExtra("team_id");
         team_name = getIntent().getStringExtra("team_name");
         player_age = getIntent().getStringExtra("player_age");
         player_gender = getIntent().getStringExtra("player_gender");
@@ -180,6 +184,10 @@ public class ScoreForm extends AppCompatActivity {
         tv_plyr_age = findViewById(R.id.tv_plyr_age);
         tv_plyr_goup = findViewById(R.id.tv_plyr_goup);
         tv_plyr_gender = findViewById(R.id.tv_plyr_gender);
+
+        tv_a_marks = findViewById(R.id.tv_a_marks);
+        tv_b_marks = findViewById(R.id.tv_b_marks);
+        tv_c_marks = findViewById(R.id.tv_c_marks);
 
         tv_plyr_name.setText(getCapsSentences(player_name));
         tv_plyr_age.setText(player_age);
@@ -293,6 +301,15 @@ public class ScoreForm extends AppCompatActivity {
             }
         });
 
+        tv_submit = findViewById(R.id.tv_submit);
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isValid()){
+                    UserLogin();
+                }
+            }
+        });
         UserLogin();
     }
 
@@ -362,14 +379,17 @@ public class ScoreForm extends AppCompatActivity {
                                     marks = marks.replace("0.","");
 
                                     if(element_name.equals("A")){
+                                        tv_a_marks.setText("0."+marks+"*");
                                         MinAValue = Integer.parseInt(min);
                                         MaxAValue = Integer.parseInt(max);
                                         UnitAValue = Integer.parseInt(marks);
                                     }else if(element_name.equals("B")){
+                                        tv_b_marks.setText("0."+marks+"*");
                                         MinBValue = Integer.parseInt(min);
                                         MaxBValue = Integer.parseInt(max);
                                         UnitBValue = Integer.parseInt(marks);
                                     }else if(element_name.equals("C")){
+                                        tv_c_marks.setText("0."+marks+"*");
                                         MinBValue = Integer.parseInt(min);
                                         MaxCValue = Integer.parseInt(max);
                                         UnitCValue = Integer.parseInt(marks);
@@ -387,6 +407,21 @@ public class ScoreForm extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (error == null || error.networkResponse == null) {
+                            Log.d(TAG, "onErrorResponse: error");
+                            return;
+                        }
+
+                        String body;
+                        //get response body and parse with appropriate encoding
+                        try {
+                            body = new String(error.networkResponse.data,"UTF-8");
+                            Log.d(TAG, "errResponse: "+body);
+                        } catch (UnsupportedEncodingException e) {
+                            // exception
+                            Log.d(TAG, "errResponse: UnsupportedEncodingException");
+                            e.printStackTrace();
+                        }
                         loadingDialog.dismissDialog();
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             DisplayToastError(ScoreForm.this,"Server is not connected to internet.");
@@ -608,12 +643,14 @@ public class ScoreForm extends AppCompatActivity {
                             String status = responseObj.getString("success");
                             if(status.equals("true")){
                                 String token = responseObj.getString("token");
+                                String year = responseObj.getString("year");
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
                                 Str_token = token;
+                                Str_year = year;
                                 if(isUserNew){
                                     addQuestionsList();
                                 }else{
-                                   DisplayToastError(getApplicationContext(),"Unser Dev");
+                                    SubmitScoreForm();
                                 }
                                 isUserNew = false;
                             }else{
@@ -657,6 +694,162 @@ public class ScoreForm extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    private boolean isValid() {
+        boolean result = true;
+
+        String Str_exec = edt_exec.getText().toString();
+        String Str_orig = edt_orig.getText().toString();
+
+        if (!Str_exec.contains(".") && Str_exec.length() != 4) {
+            DisplayToastError(ScoreForm.this,"Please Enter value in Decimals Ex: 0.20");
+            result = false;
+        }
+
+        if (!Str_orig.contains(".") && Str_orig.length() != 4) {
+            DisplayToastError(ScoreForm.this,"Please Enter value in Decimals Ex: 0.20");
+            result = false;
+        }
+
+        Str_exec = Str_exec.replace(".","");
+        if(Str_exec.length() == 3){
+            if(!(Integer.parseInt(Str_exec) <= 440)){
+                DisplayToastError(ScoreForm.this,"Please Enter Valid Value");
+                result = false;
+            }
+        }
+
+        Str_orig = Str_orig.replace(".","");
+        if(Str_orig.length() == 3){
+            if(!(Integer.parseInt(Str_orig) <= 20)){
+                DisplayToastError(ScoreForm.this,"Please Enter Valid Value");
+                result = false;
+            }
+        }
+
+        return result;
+    }
+
+    private void SubmitScoreForm() {
+
+        String Str_marklist = marklist.toString().replace("[","{");
+        String combination_json = Str_marklist.replace("]","}");
+
+        Log.d(TAG, "SubmitScoreForm: "+combination_json);
+
+        loadingDialog.startLoadingDialog();
+
+        String SubmitScore_URL = ROOT_URL+"submit_player_score";
+
+        Log.d("SubmitScore_URL",""+SubmitScore_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, SubmitScore_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+                        try {
+                            JSONObject questionlistObj = new JSONObject(response);
+                            String status = questionlistObj.getString("success");
+                            String message = questionlistObj.getString("message");
+                            if(status.equals("true")){
+                                DisplayToastSuccess(ScoreForm.this,message);
+                                Intent i = new Intent(ScoreForm.this,TeamDetails.class);
+                                i.putExtra("team_id",team_id);
+                                i.putExtra("team_name",team_name);
+                                i.putExtra("team_gender",player_gender);
+                                i.putExtra("team_group",player_group);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
+                            }else{
+                                DisplayToastError(ScoreForm.this,message);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+                        if (error == null || error.networkResponse == null) {
+                            Log.d(TAG, "onErrorResponse: error");
+                            return;
+                        }
+
+                        String body;
+                        //get response body and parse with appropriate encoding
+                        try {
+                            body = new String(error.networkResponse.data,"UTF-8");
+                            Log.d(TAG, "errResponse: "+body);
+                        } catch (UnsupportedEncodingException e) {
+                            // exception
+                            Log.d(TAG, "errResponse: UnsupportedEncodingException");
+                            e.printStackTrace();
+                        }
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(ScoreForm.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(ScoreForm.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(ScoreForm.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(ScoreForm.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(ScoreForm.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("team_id", team_id);
+                map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
+                map.put("judge_no", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_no"));
+                map.put("player_id", player_id);
+                map.put("competition_year", Str_year);
+                map.put("element_A", tv_a.getText().toString());
+                map.put("element_B", tv_b.getText().toString());
+                map.put("element_C", tv_c.getText().toString());
+                map.put("combination_json", combination_json);
+                map.put("combination", checkEmptyValue(tv_comb.getText().toString()));
+                map.put("difficulty", checkEmptyValue(tv_diff_comb.getText().toString()));
+                map.put("execution", checkEmptyValue(edt_exec.getText().toString()));
+                map.put("originality", checkEmptyValue(edt_orig.getText().toString()));
+                map.put("total_score", checkEmptyValue(tv_final_value.getText().toString()));
+                map.put("comment", edt_comments.getText().toString());
+                Log.d("SubmitParamas",""+map.toString());
+                return map;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + Str_token);
+                return headers;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    public static String checkEmptyValue(String value){
+
+        String str_value = "0.0";
+
+        if(value != null && !value.equals("") && !value.equals("null")){
+            return value;
+        }else {
+            return str_value;
+        }
+
     }
 
     @Override

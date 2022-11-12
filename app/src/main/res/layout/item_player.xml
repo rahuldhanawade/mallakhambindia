@@ -98,8 +98,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:id="@+id/tv_rsa_ten"
-                            android:text="9"
+                            android:id="@+id/tv_final_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -109,21 +108,19 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="6"
-                        android:visibility="invisible"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Age Group :"
+                            android:text="Sr. Judge Score :"
                             android:textStyle="bold"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="Under 16"
-                            android:id="@+id/tv_rsa_km"
+                            android:id="@+id/tv_sr_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -153,7 +150,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="7"
+                            android:id="@+id/tv_j1_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -175,7 +172,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="2"
+                            android:id="@+id/tv_j2_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -205,7 +202,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="7"
+                            android:id="@+id/tv_j3_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -227,7 +224,7 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:text="2"
+                            android:id="@+id/tv_j4_score"
                             android:textColor="@color/colorAccent"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -241,5 +238,17 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/iv_checked"
+        android:elevation="3dp"
+        android:visibility="gone"
+        android:layout_width="30dp"
+        android:padding="3dp"
+        android:layout_marginTop="-30dp"
+        android:background="@drawable/background_circle"
+        android:src="@drawable/ic_check"
+        app:tint="@color/white"
+        android:layout_height="30dp"/>
 
 </LinearLayout>

@@ -155,23 +155,28 @@ public class CommonMethods
 
 
 	public static String getCapsSentences(String tagName) {
-		String[] splits = tagName.toLowerCase().split(" ");
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < splits.length; i++) {
-			String eachWord = splits[i];
-			if (i > 0 && eachWord.length() > 0) {
-				sb.append(" ");
+		if(tagName != null && !tagName.equals("") && !tagName.equals("null")){
+			String[] splits = tagName.toLowerCase().split(" ");
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < splits.length; i++) {
+				String eachWord = splits[i];
+				if (i > 0 && eachWord.length() > 0) {
+					sb.append(" ");
+				}
+				String cap = eachWord.substring(0, 1).toUpperCase()
+						+ eachWord.substring(1);
+				sb.append(cap);
 			}
-			String cap = eachWord.substring(0, 1).toUpperCase()
-					+ eachWord.substring(1);
-			sb.append(cap);
+			return sb.toString();
+		}else{
+			String Str_name = "- -";
+			return Str_name;
 		}
-		return sb.toString();
 	}
 
 	public static String checkNullExcHandler(String value){
 
-		String Str_value = "";
+		String Str_value = "-";
 
 		if(value != null && !value.equals("") && !value.equals("null") && !value.equals("undefined")){
 			return value;

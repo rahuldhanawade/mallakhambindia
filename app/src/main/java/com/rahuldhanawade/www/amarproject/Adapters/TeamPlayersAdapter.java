@@ -1,11 +1,14 @@
 package com.rahuldhanawade.www.amarproject.Adapters;
 
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.checkNullExcHandler;
+
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,6 +42,18 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
         TeamPlayersPOJO lp = teamPlayersPOJOArrayList.get(position);
         holder.tv_plyr_age.setText(lp.getAge().toString().trim());
         holder.tv_plyr_name.setText(lp.getParticipant_name().toString().trim());
+        holder.tv_final_score.setText(checkNullExcHandler(lp.getFinal_score().toString().trim()));
+        holder.tv_sr_score.setText(checkNullExcHandler(lp.getSr_judge_score().toString().trim()));
+        holder.tv_j1_score.setText(checkNullExcHandler(lp.getJ1_score().toString().trim()));
+        holder.tv_j2_score.setText(checkNullExcHandler(lp.getJ2_score().toString().trim()));
+        holder.tv_j3_score.setText(checkNullExcHandler(lp.getJ3_score().toString().trim()));
+        holder.tv_j4_score.setText(checkNullExcHandler(lp.getJ4_score().toString().trim()));
+        String setScore_id = lp.getScore_id().toString();
+        if(!setScore_id.equals("null") && !setScore_id.equals("")){
+           holder.iv_checked.setVisibility(View.VISIBLE);
+        }else{
+            holder.iv_checked.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -48,12 +63,20 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_plyr_age,tv_plyr_name;
+        TextView tv_plyr_age,tv_plyr_name,tv_final_score,tv_sr_score,tv_j1_score,tv_j2_score,tv_j3_score,tv_j4_score;
+        ImageView iv_checked;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_plyr_age = itemView.findViewById(R.id.tv_plyr_age);
             tv_plyr_name = itemView.findViewById(R.id.tv_plyr_name);
+            tv_final_score = itemView.findViewById(R.id.tv_final_score);
+            tv_sr_score = itemView.findViewById(R.id.tv_sr_score);
+            tv_j1_score = itemView.findViewById(R.id.tv_j1_score);
+            tv_j2_score = itemView.findViewById(R.id.tv_j2_score);
+            tv_j3_score = itemView.findViewById(R.id.tv_j3_score);
+            tv_j4_score = itemView.findViewById(R.id.tv_j4_score);
+            iv_checked = itemView.findViewById(R.id.iv_checked);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -62,6 +85,7 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
                     i.putExtra("player_id",teamPlayersPOJOArrayList.get(itemPosition).getId());
                     i.putExtra("player_name",teamPlayersPOJOArrayList.get(itemPosition).getParticipant_name());
                     i.putExtra("team_name",teamPlayersPOJOArrayList.get(itemPosition).getTeam_name());
+                    i.putExtra("team_id",teamPlayersPOJOArrayList.get(itemPosition).getTeam_id());
                     i.putExtra("player_age",teamPlayersPOJOArrayList.get(itemPosition).getAge());
                     i.putExtra("player_gender",teamPlayersPOJOArrayList.get(itemPosition).getGender());
                     i.putExtra("player_group",teamPlayersPOJOArrayList.get(itemPosition).getGroup());

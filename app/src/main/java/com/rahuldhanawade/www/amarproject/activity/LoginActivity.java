@@ -116,9 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                             String status = responseObj.getString("success");
                             if(status.equals("true")){
                                 String token = responseObj.getString("token");
+                                String year = responseObj.getString("year");
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "login_email", Str_email);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "login_password", Str_password);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "year", year);
                                 GetUserDetails(token);
                             }else{
                                 DisplayToastError(LoginActivity.this,"Sorry For the Inconvince please try again later..");
@@ -184,12 +186,14 @@ public class LoginActivity extends AppCompatActivity {
                             }else if(responseObj.toString().contains("judge")){
                                 JSONObject judgeObj = responseObj.getJSONObject("judge");
                                 String id = judgeObj.getString("id");
+                                String judge_no = judgeObj.getString("judge_no");
                                 String name = judgeObj.getString("name");
                                 String username = judgeObj.getString("username");
                                 String email = judgeObj.getString("email");
                                 String mobile_no = judgeObj.getString("mobile_no");
 
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_id", id);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_judge_no", judge_no);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_name", name);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_username", username);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_email", email);

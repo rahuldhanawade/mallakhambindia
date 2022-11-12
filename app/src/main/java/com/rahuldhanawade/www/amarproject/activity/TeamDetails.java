@@ -48,7 +48,7 @@ public class TeamDetails extends AppCompatActivity {
 
     private static final String TAG = TeamDetails.class.getSimpleName();
     LoadingDialog loadingDialog;
-    String Str_token = "", str_team_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
+    String Str_token = "", Str_year = "", str_team_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
 
     TextView tv_players_empty,tv_plyr_count,tv_plyr_gender,tv_plyr_group;
     RecyclerView recyclerView;
@@ -101,7 +101,79 @@ public class TeamDetails extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(TeamDetails.this));
         recyclerView.setAdapter(teamPlayersAdapter);
 
-        getTeamPlayerList();
+        UserLogin();
+    }
+
+    public void UserLogin(){
+
+        String Str_email = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_email");
+        String Str_password = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_password");
+
+        loadingDialog.startLoadingDialog();
+
+        String LOGIN_URL = ROOT_URL+"login";
+
+        Log.d("LOGIN_URL",""+LOGIN_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, LOGIN_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            String status = responseObj.getString("success");
+                            if(status.equals("true")){
+                                String token = responseObj.getString("token");
+                                String year = responseObj.getString("year");
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "year", year);
+                                Str_token = token;
+                                Str_year = year;
+                                getTeamPlayerList();
+                            }else{
+                                DisplayToastError(TeamDetails.this,"Sorry For the Inconvince please try again later..");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(TeamDetails.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(TeamDetails.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(TeamDetails.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(TeamDetails.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(TeamDetails.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("email", Str_email);
+                map.put("password", Str_password);
+                Log.d("LoginParamas",""+map.toString());
+                return map;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void getTeamPlayerList() {
@@ -130,14 +202,22 @@ public class TeamDetails extends AppCompatActivity {
                                 Log.d("Teamsdataobj",""+Playersdataobj);
 
                                 teamPlayersPOJO = new TeamPlayersPOJO();
-                                teamPlayersPOJO.setId(Playersdataobj.getString("id"));
+                                teamPlayersPOJO.setId(Playersdataobj.getString("player_id"));
+                                teamPlayersPOJO.setScore_id(Playersdataobj.getString("score_id"));
                                 teamPlayersPOJO.setParticipant_name(Playersdataobj.getString("participant_name"));
                                 teamPlayersPOJO.setDob(Playersdataobj.getString("dob"));
                                 teamPlayersPOJO.setAge(Playersdataobj.getString("age"));
+                                teamPlayersPOJO.setFinal_score(Playersdataobj.getString("final_score"));
+                                teamPlayersPOJO.setSr_judge_score(Playersdataobj.getString("sr_judge_score"));
+                                teamPlayersPOJO.setJ1_score(Playersdataobj.getString("j1_score"));
+                                teamPlayersPOJO.setJ2_score(Playersdataobj.getString("j2_score"));
+                                teamPlayersPOJO.setJ3_score(Playersdataobj.getString("j3_score"));
+                                teamPlayersPOJO.setJ4_score(Playersdataobj.getString("j4_score"));
                                 teamPlayersPOJO.setCreated_date(Playersdataobj.getString("created_date"));
                                 teamPlayersPOJO.setTeam_name(str_team_name);
                                 teamPlayersPOJO.setGender(str_team_gender);
                                 teamPlayersPOJO.setGroup(str_team_group);
+                                teamPlayersPOJO.setTeam_id(str_team_id);
                                 teamPlayersPOJOArrayList.add(teamPlayersPOJO);
 
                             }
@@ -210,7 +290,7 @@ public class TeamDetails extends AppCompatActivity {
             protected Map<String, String> getParams () {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("team_id", str_team_id);
-                map.put("competition_year", "2021");
+                map.put("competition_year", Str_year);
                 Log.d("Getdata",""+map.toString());
                 return map;
             }

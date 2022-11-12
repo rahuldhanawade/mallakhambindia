@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private LoadingDialog loadingDialog;
 
     String Str_gender = "", Str_grp_gender = "";
-    String Str_token = "", Str_name = "", Str_username = "", Str_email = "", Str_mobile_no = "";
+    String Str_token = "", Str_year = "", Str_name = "", Str_username = "", Str_email = "", Str_mobile_no = "";
 
     TextView tv_teams_empty;
     RecyclerView recyclerView;
@@ -257,18 +257,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         try {
                             body = new String(error.networkResponse.data,"UTF-8");
                             Log.d(TAG, "errResponse: "+body);
-                            if(body.contains("data")){
-                                JSONObject resposeObj = new JSONObject(body);
-                                JSONArray dataArry = resposeObj.getJSONArray("data");
-                                if(dataArry.length() > 0){
-                                    setGenderGroup(dataArry);
-                                }
-                            }
                         } catch (UnsupportedEncodingException e) {
                             // exception
                             Log.d(TAG, "errResponse: UnsupportedEncodingException");
-                            e.printStackTrace();
-                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
@@ -358,8 +349,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             String status = responseObj.getString("success");
                             if(status.equals("true")){
                                 String token = responseObj.getString("token");
+                                String year = responseObj.getString("year");
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "token", token);
                                 Str_token = token;
+                                Str_year = year;
                                 getTeamList();
                             }else{
                                 DisplayToastError(HomeActivity.this,"Sorry For the Inconvince please try again later..");
@@ -516,7 +509,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("gender", Str_gender);
                 map.put("age_group", Str_grp_gender);
-                map.put("competition_year", "2021");
+                map.put("competition_year", Str_year);
                 Log.d("Getdata",""+map.toString());
                 return map;
             }
