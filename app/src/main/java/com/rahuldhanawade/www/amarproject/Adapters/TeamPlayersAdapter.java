@@ -81,7 +81,15 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
                 @Override
                 public void onClick(View view) {
                     int itemPosition = getLayoutPosition();
+                    String Score_id = teamPlayersPOJOArrayList.get(itemPosition).getScore_id();
+                    String isScore = "0";
+                    if(!Score_id.equals("null") && !Score_id.equals("")){
+                        isScore = "1";
+                    }else{
+                        isScore = "0";
+                    }
                     Intent i = new Intent(context, ScoreForm.class);
+                    i.putExtra("score_id",isScore);
                     i.putExtra("player_id",teamPlayersPOJOArrayList.get(itemPosition).getId());
                     i.putExtra("player_name",teamPlayersPOJOArrayList.get(itemPosition).getParticipant_name());
                     i.putExtra("team_name",teamPlayersPOJOArrayList.get(itemPosition).getTeam_name());

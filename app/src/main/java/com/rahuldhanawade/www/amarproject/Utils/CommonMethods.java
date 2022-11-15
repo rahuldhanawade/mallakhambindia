@@ -176,7 +176,7 @@ public class CommonMethods
 
 	public static String checkNullExcHandler(String value){
 
-		String Str_value = "-";
+		String Str_value = "";
 
 		if(value != null && !value.equals("") && !value.equals("null") && !value.equals("undefined")){
 			return value;

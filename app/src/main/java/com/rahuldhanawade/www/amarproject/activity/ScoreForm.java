@@ -75,7 +75,8 @@ public class ScoreForm extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_token = "",Str_year = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String Str_token = "",Str_year = "",score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String set_ele_A = "",set_ele_B = "",set_ele_C = "",set_comb = "",set_exec = "",set_orig = "";
     EditText edt_exec,edt_orig,edt_comments;
     TextView tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
     TextView tv_diff_comb,tv_comb,tv_final_value,tv_a,tv_b,tv_c,tv_submit;
@@ -102,6 +103,7 @@ public class ScoreForm extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(ScoreForm.this);
 
+        score_id = getIntent().getStringExtra("score_id");
         player_id = getIntent().getStringExtra("player_id");
         player_name = getIntent().getStringExtra("player_name");
         team_id = getIntent().getStringExtra("team_id");
@@ -364,6 +366,13 @@ public class ScoreForm extends AppCompatActivity {
                                             setQuestionListMarkArray(k,isChecked, finalQue_marks);
                                         }
                                     });
+                                    if(score_id.equals("1")){
+                                        JSONArray set_combArry = new JSONArray(set_comb);
+                                        String value = set_combArry.getString(k);
+                                        if(!value.equals("0.0")){
+                                            chk_ans.setChecked(true);
+                                        }
+                                    }
 
                                     linear_questions.addView(rowView);
                                 }
@@ -393,6 +402,17 @@ public class ScoreForm extends AppCompatActivity {
                                         MinBValue = Integer.parseInt(min);
                                         MaxCValue = Integer.parseInt(max);
                                         UnitCValue = Integer.parseInt(marks);
+                                    }
+                                }
+                                if(score_id.equals("1")){
+                                    for(int q=0; q< Integer.parseInt(set_ele_A);q++){
+                                        setValueInDifficulty(true,tv_a,MinAValue,MaxAValue,UnitAValue);
+                                    }
+                                    for(int q=0; q< Integer.parseInt(set_ele_B);q++){
+                                        setValueInDifficulty(true,tv_b,MinBValue,MaxBValue,UnitBValue);
+                                    }
+                                    for(int q=0; q< Integer.parseInt(set_ele_C);q++){
+                                        setValueInDifficulty(true,tv_c,MinCValue,MaxCValue,UnitCValue);
                                     }
                                 }
                             }else{
@@ -480,39 +500,71 @@ public class ScoreForm extends AppCompatActivity {
             crtValue = Integer.parseInt(textView.getText().toString());
         }
 
-        setOtherCalulation(false,crtValue*unitValue);
-
         if(isboolean){
-            if(crtValue >= minValue && crtValue < maxValue){
+            if(crtValue >= minValue){
                 crtValue = crtValue + 1;
             }else{
-                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
+//                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
             }
         }else {
-            if(crtValue > minValue && crtValue <= maxValue){
+            if(crtValue > minValue){
                 crtValue = crtValue - 1;
             }else{
-                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
+//                DisplayToastError(ScoreForm.this,"You can only select min "+minValue+" & max "+maxValue+" value.");
             }
         }
 
         textView.setText(String.valueOf(crtValue));
         setDiffCalculation();
-        setOtherCalulation(true,crtValue*unitValue);
     }
 
     private void setDiffCalculation() {
         int a = 0, b = 0, c = 0;
 
-        String value_a = tv_a.getText().toString();
-        String value_b = tv_b.getText().toString();
-        String value_c = tv_c.getText().toString();
+        int value_a = Integer.parseInt(tv_a.getText().toString());
+        int value_b = Integer.parseInt(tv_b.getText().toString());
+        int value_c = Integer.parseInt(tv_c.getText().toString());
 
-        a = Integer.parseInt(value_a) * UnitAValue;
-        b = Integer.parseInt(value_b) * UnitBValue;
-        c = Integer.parseInt(value_c) * UnitCValue;
+        if(!tv_diff_comb.getText().toString().equals("")){
+            double total_score = Double.parseDouble(tv_diff_comb.getText().toString());
+            int finalScore = (int) (total_score * 100);
+            setOtherCalulation(false,finalScore);
+        }
+
+        if(value_c == MaxCValue && value_b == MaxBValue && value_a == MaxAValue && (value_a + value_b + value_c) == 11){
+            c = MaxCValue * UnitCValue;
+            b = MaxBValue * UnitBValue;
+            a = MaxAValue * UnitAValue;
+        }else{
+            if(value_c > MaxCValue && value_b < MaxBValue){
+                c = MaxCValue * UnitCValue;
+                int c_and_b = value_c - MaxCValue;
+                b = c_and_b + value_b;
+                if (b > MaxBValue){
+                    int b_and_a = b - MaxBValue;
+                    value_a = b_and_a + value_a;
+
+                    b = MaxBValue * UnitBValue;
+                    a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                }else{
+                    a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                    b = value_b * UnitBValue;
+                }
+            }else if(value_b > MaxBValue && (value_a + value_b) > (MaxAValue + MaxBValue)){
+                a = MaxAValue * UnitAValue;
+                b = MaxBValue * UnitBValue;
+                c = (value_c > MaxCValue) ? (MaxCValue * UnitCValue) : (value_c * UnitCValue);
+            }else{
+                a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                b = (value_b > MaxBValue) ? (MaxBValue * UnitBValue) : (value_b * UnitBValue);
+                c = (value_c > MaxCValue) ? (MaxCValue * UnitCValue) : (value_c * UnitCValue);
+            }
+        }
 
         int intValue = a + b + c;
+//        Log.d(TAG, "setDiffCalculation: A = "+a+" B = "+b+" C = "+c);
+//        Log.d(TAG, "setDiffCalculation: "+intValue);
+        setOtherCalulation(true,intValue);
         double finalValue = (double) intValue / 100;
         BigDecimal bd = new BigDecimal(finalValue).setScale(2, RoundingMode.HALF_UP);
         tv_diff_comb.setText(String.valueOf(bd));
@@ -648,7 +700,11 @@ public class ScoreForm extends AppCompatActivity {
                                 Str_token = token;
                                 Str_year = year;
                                 if(isUserNew){
-                                    addQuestionsList();
+                                    if(score_id.equals("1")){
+                                        getPlayerScore();
+                                    }else{
+                                        addQuestionsList();
+                                    }
                                 }else{
                                     SubmitScoreForm();
                                 }
@@ -686,6 +742,114 @@ public class ScoreForm extends AppCompatActivity {
                 map.put("password", Str_password);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void getPlayerScore() {
+        loadingDialog.startLoadingDialog();
+
+        String GETPLYSCR_URL = ROOT_URL+"get_player_score";
+
+        Log.d("GETPLYSCR_URL",""+GETPLYSCR_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, GETPLYSCR_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        loadingDialog.dismissDialog();
+                        Log.d("Response",""+response);
+                        try {
+                            JSONObject questionlistObj = new JSONObject(response);
+                            String status = questionlistObj.getString("success");
+                            String message = questionlistObj.getString("message");
+                            if(status.equals("true")){
+                                JSONArray data = questionlistObj.getJSONArray("data");
+                                for(int i=0;i < data.length();i++){
+                                    JSONObject data_obj = data.getJSONObject(i);
+                                    set_ele_A = data_obj.getString("element_A");
+                                    set_ele_B = data_obj.getString("element_B");
+                                    set_ele_C = data_obj.getString("element_C");
+                                    String combination_json = data_obj.getString("combination_json");
+                                    set_exec = data_obj.getString("execution");
+                                    set_orig = data_obj.getString("originality");
+                                    String comment = data_obj.getString("comment");
+
+                                    combination_json = combination_json.replace("{","[");
+                                    combination_json = combination_json.replace("}","]");
+                                    set_comb = combination_json;
+                                    edt_exec.setText(set_exec);
+                                    edt_orig.setText(set_orig);
+                                    edt_comments.setText(checkNullExcHandler(comment));
+
+                                    tv_submit.setVisibility(View.GONE);
+
+                                    Log.d(TAG, "GETPLYonResponse: "+set_ele_A+"\n"+set_ele_B+"\n"+set_ele_C+"\n"+set_comb+"\n"+set_exec+"\n"+set_orig);
+                                }
+                                addQuestionsList();
+                            }else{
+                                DisplayToastError(ScoreForm.this,message);
+                                addQuestionsList();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error == null || error.networkResponse == null) {
+                            Log.d(TAG, "onErrorResponse: error");
+                            return;
+                        }
+
+                        String body;
+                        //get response body and parse with appropriate encoding
+                        try {
+                            body = new String(error.networkResponse.data,"UTF-8");
+                            Log.d(TAG, "errResponse: "+body);
+                        } catch (UnsupportedEncodingException e) {
+                            // exception
+                            Log.d(TAG, "errResponse: UnsupportedEncodingException");
+                            e.printStackTrace();
+                        }
+                        loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(ScoreForm.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(ScoreForm.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(ScoreForm.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(ScoreForm.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(ScoreForm.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("team_id", team_id);
+                map.put("player_id", player_id);
+                map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
+                map.put("competition_year", Str_year);
+                Log.d("LoginParamas",""+map.toString());
+                return map;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + Str_token);
+                return headers;
             }
         };
 
