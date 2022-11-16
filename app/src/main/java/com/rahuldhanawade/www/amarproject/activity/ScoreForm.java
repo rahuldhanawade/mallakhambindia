@@ -531,7 +531,7 @@ public class ScoreForm extends AppCompatActivity {
             setOtherCalulation(false,finalScore);
         }
 
-        if(value_c == MaxCValue && value_b == MaxBValue && value_a == MaxAValue && (value_a + value_b + value_c) == 11){
+        if(value_c >= MaxCValue && value_b >= MaxBValue && (value_a + value_b + value_c) >= 11){
             c = MaxCValue * UnitCValue;
             b = MaxBValue * UnitBValue;
             a = MaxAValue * UnitAValue;
