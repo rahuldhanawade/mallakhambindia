@@ -536,19 +536,19 @@ public class ScoreForm extends AppCompatActivity {
             b = MaxBValue * UnitBValue;
             a = MaxAValue * UnitAValue;
         }else{
-            if(value_c > MaxCValue && value_b < MaxBValue){
+            if(value_c > MaxCValue && value_b <= MaxBValue){
                 c = MaxCValue * UnitCValue;
                 int c_and_b = value_c - MaxCValue;
                 b = c_and_b + value_b;
                 if (b > MaxBValue){
                     int b_and_a = b - MaxBValue;
-                    value_a = b_and_a + value_a;
+                    int val_a = b_and_a + value_a;
 
                     b = MaxBValue * UnitBValue;
-                    a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                    a = (val_a > MaxAValue) ? (MaxAValue * UnitAValue) : (val_a * UnitAValue);
                 }else{
                     a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
-                    b = value_b * UnitBValue;
+                    b = b * UnitBValue;
                 }
             }else if(value_b > MaxBValue && (value_a + value_b) > (MaxAValue + MaxBValue)){
                 a = MaxAValue * UnitAValue;
@@ -562,7 +562,7 @@ public class ScoreForm extends AppCompatActivity {
         }
 
         int intValue = a + b + c;
-//        Log.d(TAG, "setDiffCalculation: A = "+a+" B = "+b+" C = "+c);
+//        Log.d(TAG, "setDiffCalculation: A = "+a+"---"+value_a+" B = "+b+"---"+value_b+" C = "+c+"---"+value_c);
 //        Log.d(TAG, "setDiffCalculation: "+intValue);
         setOtherCalulation(true,intValue);
         double finalValue = (double) intValue / 100;
