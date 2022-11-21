@@ -7,6 +7,8 @@ import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToas
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,7 +42,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView cirLoginButton;
+    TextView cirLoginButton,tv_ver_code;
     EditText Edt_Email,EdtPassword;
     private LoadingDialog loadingDialog;
     private String TAG = "LoginActivity" ;
@@ -72,6 +74,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        tv_ver_code = findViewById(R.id.tv_ver_code);
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+            String verCode = pInfo.versionName;
+//            Log.d("test","verCode"+verCode);
+            tv_ver_code.setText("Version : v"+verCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 

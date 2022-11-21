@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -72,7 +74,7 @@ import java.util.Objects;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    LinearLayout linear_main;
+    TextView tv_ver_code;
     FloatingActionButton flt_fliter;
     BottomSheetDialog bottomSheetDialog;
     private LoadingDialog loadingDialog;
@@ -124,6 +126,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if(Str_name!=null && !Str_name.equalsIgnoreCase("")) {
             login_name.setText(Str_name);
+        }
+
+        tv_ver_code = findViewById(R.id.tv_home_ver_code);
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+            String verCode = pInfo.versionName;
+//            Log.d("test","verCode"+verCode);
+            tv_ver_code.setText("Version : v"+verCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
 
         init();
