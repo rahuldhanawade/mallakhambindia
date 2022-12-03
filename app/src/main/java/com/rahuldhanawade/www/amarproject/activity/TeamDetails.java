@@ -203,17 +203,15 @@ public class TeamDetails extends AppCompatActivity {
 
                                 teamPlayersPOJO = new TeamPlayersPOJO();
                                 teamPlayersPOJO.setId(Playersdataobj.getString("player_id"));
-                                teamPlayersPOJO.setScore_id(Playersdataobj.getString("score_id"));
+                                teamPlayersPOJO.setScore_id(Playersdataobj.getString("score_flag"));
                                 teamPlayersPOJO.setParticipant_name(Playersdataobj.getString("participant_name"));
                                 teamPlayersPOJO.setDob(Playersdataobj.getString("dob"));
                                 teamPlayersPOJO.setAge(Playersdataobj.getString("age"));
-                                teamPlayersPOJO.setFinal_score(Playersdataobj.getString("final_score"));
-                                teamPlayersPOJO.setSr_judge_score(Playersdataobj.getString("sr_judge_score"));
-                                teamPlayersPOJO.setJ1_score(Playersdataobj.getString("j1_score"));
-                                teamPlayersPOJO.setJ2_score(Playersdataobj.getString("j2_score"));
-                                teamPlayersPOJO.setJ3_score(Playersdataobj.getString("j3_score"));
-                                teamPlayersPOJO.setJ4_score(Playersdataobj.getString("j4_score"));
-                                teamPlayersPOJO.setCreated_date(Playersdataobj.getString("created_date"));
+                                teamPlayersPOJO.setSr_judge_score(Playersdataobj.optString("sr_judge_score"));
+                                teamPlayersPOJO.setJ1_score(Playersdataobj.optString("j1_score"));
+                                teamPlayersPOJO.setJ2_score(Playersdataobj.optString("j2_score"));
+                                teamPlayersPOJO.setJ3_score(Playersdataobj.optString("j3_score"));
+                                teamPlayersPOJO.setJ4_score(Playersdataobj.optString("j4_score"));
                                 teamPlayersPOJO.setTeam_name(str_team_name);
                                 teamPlayersPOJO.setGender(str_team_gender);
                                 teamPlayersPOJO.setGroup(str_team_group);
@@ -289,6 +287,7 @@ public class TeamDetails extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams () {
                 Map<String, String> map = new HashMap<String, String>();
+                map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("team_id", str_team_id);
                 map.put("competition_year", Str_year);
                 Log.d("Getdata",""+map.toString());

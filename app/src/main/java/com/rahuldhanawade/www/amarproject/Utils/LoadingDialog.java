@@ -24,7 +24,7 @@ public class LoadingDialog {
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCanceledOnTouchOutside(true);
-        dialog.setCancelable(true);
+        dialog.setCancelable(false);
         dialog.setContentView(R.layout.custom_dialog);
         Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(
                 new ColorDrawable(android.graphics.Color.TRANSPARENT));

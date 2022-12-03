@@ -6,17 +6,17 @@
     android:layout_width="match_parent"
     android:background="@color/black"
     android:layout_height="match_parent"
-    tools:context=".activity.ScoreForm">
+    tools:context=".activity.ScoreResultActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/appbar_menu_score"
+        android:id="@+id/appbar_menu_score_result"
         android:theme="@style/AppTheme2.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_score_form"
+            android:id="@+id/toolbar_score_result"
             app:titleTextColor="@color/white"
             app:theme="@style/ToolbarStyle"
             app:navigationIcon="@drawable/ic_arrow_back"
@@ -30,7 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:layout_below="@+id/appbar_menu_score"
+        android:layout_below="@+id/appbar_menu_score_result"
         android:background="@drawable/dashboard_background"
         android:layout_height="match_parent">
 
@@ -91,7 +91,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/tv_plyr_name"
+                                android:id="@+id/tv_sr_plyr_name"
                                 style="@style/TitleTextStyle"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_plyr_age"
+                                    android:id="@+id/tv_sr_plyr_age"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_plyr_goup"
+                                    android:id="@+id/tv_sr_plyr_goup"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_plyr_gender"
+                                    android:id="@+id/tv_sr_plyr_gender"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -203,24 +203,23 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingBottom="10dp">
+                        android:layout_height="match_parent">
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
                             android:background="@color/colorAccent"
-                            android:orientation="vertical">
+                            android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/TitleTextStyle"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Fill Score"
+                                android:text="Judge Score"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
-                                android:textStyle="bold" />
+                                style="@style/viewParent.headerText"
+                                android:textSize="20sp"
+                                android:layout_height="wrap_content"/>
 
                         </LinearLayout>
 
@@ -260,7 +259,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/tv_a_marks"
+                                            android:id="@+id/tv_sr_a_marks"
                                             style="@style/TitleTextStyle"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
@@ -279,38 +278,18 @@
                                         android:layout_margin="3dp"
                                         android:background="@drawable/table_drawable_orange"
                                         android:gravity="center"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
-
-                                        <ImageView
-                                            android:id="@+id/iv_a_minus"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_remove" />
+                                        android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/tv_a"
+                                            android:id="@+id/tv_sr_a"
                                             style="@style/TitleTextStyle"
-                                            android:layout_width="0dp"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
                                             android:gravity="center"
                                             android:minHeight="20dp"
                                             android:padding="3dp"
                                             android:text="0"
                                             android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/iv_a_add"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_add" />
 
                                     </LinearLayout>
 
@@ -340,7 +319,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/tv_b_marks"
+                                            android:id="@+id/tv_sr_b_marks"
                                             style="@style/TitleTextStyle"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
@@ -359,38 +338,18 @@
                                         android:layout_margin="3dp"
                                         android:background="@drawable/table_drawable_orange"
                                         android:gravity="center"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
-
-                                        <ImageView
-                                            android:id="@+id/iv_b_minus"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_remove" />
+                                        android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/tv_b"
+                                            android:id="@+id/tv_sr_b"
                                             style="@style/TitleTextStyle"
-                                            android:layout_width="0dp"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
                                             android:gravity="center"
                                             android:minHeight="20dp"
                                             android:padding="3dp"
                                             android:text="0"
                                             android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/iv_b_add"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_add" />
 
                                     </LinearLayout>
 
@@ -420,7 +379,7 @@
                                             android:textStyle="bold" />
 
                                         <TextView
-                                            android:id="@+id/tv_c_marks"
+                                            android:id="@+id/tv_sr_c_marks"
                                             style="@style/TitleTextStyle"
                                             android:layout_width="0dp"
                                             android:layout_height="wrap_content"
@@ -439,38 +398,18 @@
                                         android:layout_margin="3dp"
                                         android:background="@drawable/table_drawable_orange"
                                         android:gravity="center"
-                                        android:orientation="horizontal"
-                                        android:weightSum="3">
-
-                                        <ImageView
-                                            android:id="@+id/iv_c_minus"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_remove" />
+                                        android:orientation="horizontal">
 
                                         <TextView
-                                            android:id="@+id/tv_c"
+                                            android:id="@+id/tv_sr_c"
                                             style="@style/TitleTextStyle"
-                                            android:layout_width="0dp"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:layout_weight="1"
                                             android:gravity="center"
                                             android:minHeight="20dp"
                                             android:padding="3dp"
                                             android:text="0"
                                             android:textStyle="bold" />
-
-                                        <ImageView
-                                            android:id="@+id/iv_c_add"
-                                            android:layout_width="0dp"
-                                            android:layout_height="wrap_content"
-                                            android:layout_weight="1"
-                                            android:elevation="3dp"
-                                            android:minHeight="20dp"
-                                            android:src="@drawable/ic_add" />
 
                                     </LinearLayout>
 
@@ -528,7 +467,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_comb"
+                                    android:id="@+id/tv_sr_comb"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -572,7 +511,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_diff_comb"
+                                    android:id="@+id/tv_sr_diff_comb"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -599,7 +538,7 @@
                                     android:layout_margin="2dp"
                                     android:layout_weight="6"
                                     android:background="@drawable/table_drawable"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:text="Execution"
                                     android:textStyle="bold" />
 
@@ -611,25 +550,20 @@
                                     android:layout_weight="2"
                                     android:background="@drawable/table_drawable"
                                     android:gravity="center"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:text="4.40*"
                                     android:textStyle="bold" />
 
-
-                                <EditText
-                                    android:id="@+id/edt_exec"
+                                <TextView
+                                    android:id="@+id/tv_sr_exc"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
                                     android:layout_weight="2"
                                     android:background="@drawable/table_drawable"
-                                    android:digits="0123456789."
                                     android:gravity="center"
-                                    android:hint="1.23"
-                                    android:inputType="number"
-                                    android:maxLength="4"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
@@ -647,7 +581,7 @@
                                     android:layout_margin="2dp"
                                     android:layout_weight="6"
                                     android:background="@drawable/table_drawable"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:text="Originality"
                                     android:textStyle="bold" />
 
@@ -659,24 +593,20 @@
                                     android:layout_weight="2"
                                     android:background="@drawable/table_drawable"
                                     android:gravity="center"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:text="0.20*"
                                     android:textStyle="bold" />
 
-                                <EditText
-                                    android:id="@+id/edt_orig"
+                                <TextView
+                                    android:id="@+id/tv_sr_orig"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
                                     android:layout_weight="2"
                                     android:background="@drawable/table_drawable"
-                                    android:digits="0123456789."
                                     android:gravity="center"
-                                    android:hint="1.23"
-                                    android:inputType="number"
-                                    android:maxLength="4"
-                                    android:padding="8dp"
+                                    android:padding="3dp"
                                     android:textStyle="bold" />
 
                             </LinearLayout>
@@ -693,6 +623,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
                                     android:layout_weight="6"
+                                    android:textSize="20sp"
                                     android:background="@drawable/table_drawable"
                                     android:padding="3dp"
                                     android:text="Total Score"
@@ -704,6 +635,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
                                     android:layout_weight="2"
+                                    android:textSize="20sp"
                                     android:background="@drawable/table_drawable"
                                     android:gravity="center"
                                     android:padding="3dp"
@@ -711,13 +643,42 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_final_value"
+                                    android:id="@+id/tv_sr_final_value"
                                     style="@style/TitleTextStyle"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_margin="2dp"
                                     android:layout_weight="2"
+                                    android:textSize="20sp"
                                     android:background="@drawable/table_drawable"
+                                    android:gravity="center"
+                                    android:padding="3dp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_margin="2dp"
+                                android:background="@drawable/table_drawable">
+
+                                <TextView
+                                    style="@style/TitleTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
+                                    android:padding="3dp"
+                                    android:text="Comment :"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tv_sr_comment"
+                                    style="@style/TitleTextStyle"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="2dp"
                                     android:gravity="center"
                                     android:padding="3dp"
                                     android:textStyle="bold" />
@@ -726,56 +687,50 @@
 
                         </LinearLayout>
 
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:visibility="gone"
+                    android:id="@+id/card_judge_score"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingBottom="10dp">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="3dp"
-                            android:background="@drawable/table_drawable"
-                            android:orientation="horizontal"
-                            android:weightSum="5">
+                            android:background="@color/colorAccent"
+                            android:orientation="vertical">
 
-                            <EditText
-                                android:id="@+id/edt_comments"
+                            <TextView
                                 style="@style/TitleTextStyle"
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_margin="3dp"
-                                android:layout_weight="4"
-                                android:background="@color/white"
-                                android:gravity="center"
-                                android:hint="Comment"
-                                android:minHeight="100dp"
-                                android:padding="3dp"
-                                android:scrollIndicators="right" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/iv_record"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
-                                    android:src="@drawable/ic_mic"
-                                    app:tint="@color/colorAccent" />
-
-                            </LinearLayout>
-
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="All Judge Scores"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_submit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:layout_marginTop="15dp"
-                            android:background="@drawable/button_background"
-                            android:gravity="center"
-                            android:text="Submit"
-                            android:textColor="@color/white" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/linear_all_judge"
+                            android:orientation="vertical"
+                            android:layout_margin="5dp"
+                            android:layout_height="wrap_content">
+
+                        </LinearLayout>
 
                     </LinearLayout>
 

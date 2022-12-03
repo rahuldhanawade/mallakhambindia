@@ -53,6 +53,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.rahuldhanawade.www.amarproject.R;
 import com.rahuldhanawade.www.amarproject.Utils.LoadingDialog;
 import com.rahuldhanawade.www.amarproject.Utils.MyValidator;
@@ -111,6 +112,7 @@ public class ScoreForm extends AppCompatActivity {
         player_age = getIntent().getStringExtra("player_age");
         player_gender = getIntent().getStringExtra("player_gender");
         player_group = getIntent().getStringExtra("player_group");
+        Log.d(TAG, "onCreate: score_id "+score_id);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_score_form);
         setSupportActionBar(toolbar);
@@ -366,7 +368,7 @@ public class ScoreForm extends AppCompatActivity {
                                             setQuestionListMarkArray(k,isChecked, finalQue_marks);
                                         }
                                     });
-                                    if(score_id.equals("1")){
+                                    if(!score_id.equals("0")){
                                         JSONArray set_combArry = new JSONArray(set_comb);
                                         String value = set_combArry.getString(k);
                                         if(!value.equals("0.0")){
@@ -404,7 +406,7 @@ public class ScoreForm extends AppCompatActivity {
                                         UnitCValue = Integer.parseInt(marks);
                                     }
                                 }
-                                if(score_id.equals("1")){
+                                if(!score_id.equals("0")){
                                     for(int q=0; q< Integer.parseInt(set_ele_A);q++){
                                         setValueInDifficulty(true,tv_a,MinAValue,MaxAValue,UnitAValue);
                                     }
@@ -555,7 +557,13 @@ public class ScoreForm extends AppCompatActivity {
                 b = MaxBValue * UnitBValue;
                 c = (value_c > MaxCValue) ? (MaxCValue * UnitCValue) : (value_c * UnitCValue);
             }else{
-                a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                if(value_a < MaxAValue && value_b > MaxBValue){
+                    int val_a = value_b - MaxBValue;
+                    int a_and_b = ((value_a + val_a) > MaxAValue) ? MaxAValue : (value_a + val_a);
+                    a = a_and_b * UnitAValue;
+                }else{
+                    a = (value_a > MaxAValue) ? (MaxAValue * UnitAValue) : (value_a * UnitAValue);
+                }
                 b = (value_b > MaxBValue) ? (MaxBValue * UnitBValue) : (value_b * UnitBValue);
                 c = (value_c > MaxCValue) ? (MaxCValue * UnitCValue) : (value_c * UnitCValue);
             }
@@ -700,7 +708,7 @@ public class ScoreForm extends AppCompatActivity {
                                 Str_token = token;
                                 Str_year = year;
                                 if(isUserNew){
-                                    if(score_id.equals("1")){
+                                    if(!score_id.equals("0")){
                                         getPlayerScore();
                                     }else{
                                         addQuestionsList();
@@ -788,7 +796,7 @@ public class ScoreForm extends AppCompatActivity {
                                     edt_orig.setText(set_orig);
                                     edt_comments.setText(checkNullExcHandler(comment));
 
-                                    tv_submit.setVisibility(View.GONE);
+                                    tv_submit.setText("Update");
 
                                     Log.d(TAG, "GETPLYonResponse: "+set_ele_A+"\n"+set_ele_B+"\n"+set_ele_C+"\n"+set_comb+"\n"+set_exec+"\n"+set_orig);
                                 }
@@ -838,6 +846,7 @@ public class ScoreForm extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<String, String>();
+                map.put("score_id", score_id);
                 map.put("team_id", team_id);
                 map.put("player_id", player_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
@@ -971,6 +980,7 @@ public class ScoreForm extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<String, String>();
+                map.put("score_id", score_id);
                 map.put("team_id", team_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("judge_no", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_no"));

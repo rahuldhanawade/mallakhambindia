@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.rahuldhanawade.www.amarproject.R;
 import com.rahuldhanawade.www.amarproject.activity.ScoreForm;
+import com.rahuldhanawade.www.amarproject.activity.ScoreResultActivity;
 import com.rahuldhanawade.www.amarproject.activity.TeamDetails;
 
 import java.util.ArrayList;
@@ -42,14 +43,13 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
         TeamPlayersPOJO lp = teamPlayersPOJOArrayList.get(position);
         holder.tv_plyr_age.setText(lp.getAge().toString().trim());
         holder.tv_plyr_name.setText(lp.getParticipant_name().toString().trim());
-        holder.tv_final_score.setText(checkNullExcHandler(lp.getFinal_score().toString().trim()));
         holder.tv_sr_score.setText(checkNullExcHandler(lp.getSr_judge_score().toString().trim()));
         holder.tv_j1_score.setText(checkNullExcHandler(lp.getJ1_score().toString().trim()));
         holder.tv_j2_score.setText(checkNullExcHandler(lp.getJ2_score().toString().trim()));
         holder.tv_j3_score.setText(checkNullExcHandler(lp.getJ3_score().toString().trim()));
         holder.tv_j4_score.setText(checkNullExcHandler(lp.getJ4_score().toString().trim()));
         String setScore_id = lp.getScore_id().toString();
-        if(!setScore_id.equals("null") && !setScore_id.equals("")){
+        if(setScore_id.equals("1")){
            holder.iv_checked.setVisibility(View.VISIBLE);
         }else{
             holder.iv_checked.setVisibility(View.GONE);
@@ -63,14 +63,13 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_plyr_age,tv_plyr_name,tv_final_score,tv_sr_score,tv_j1_score,tv_j2_score,tv_j3_score,tv_j4_score;
+        TextView tv_plyr_age,tv_plyr_name,tv_sr_score,tv_j1_score,tv_j2_score,tv_j3_score,tv_j4_score;
         ImageView iv_checked;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tv_plyr_age = itemView.findViewById(R.id.tv_plyr_age);
             tv_plyr_name = itemView.findViewById(R.id.tv_plyr_name);
-            tv_final_score = itemView.findViewById(R.id.tv_final_score);
             tv_sr_score = itemView.findViewById(R.id.tv_sr_score);
             tv_j1_score = itemView.findViewById(R.id.tv_j1_score);
             tv_j2_score = itemView.findViewById(R.id.tv_j2_score);
@@ -82,14 +81,13 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
                 public void onClick(View view) {
                     int itemPosition = getLayoutPosition();
                     String Score_id = teamPlayersPOJOArrayList.get(itemPosition).getScore_id();
-                    String isScore = "0";
-                    if(!Score_id.equals("null") && !Score_id.equals("")){
-                        isScore = "1";
+                    Intent i;
+                    if(Score_id.equals("1")){
+                        i = new Intent(context, ScoreResultActivity.class);
                     }else{
-                        isScore = "0";
+                        i = new Intent(context, ScoreForm.class);
                     }
-                    Intent i = new Intent(context, ScoreForm.class);
-                    i.putExtra("score_id",isScore);
+                    i.putExtra("score_id",Score_id);
                     i.putExtra("player_id",teamPlayersPOJOArrayList.get(itemPosition).getId());
                     i.putExtra("player_name",teamPlayersPOJOArrayList.get(itemPosition).getParticipant_name());
                     i.putExtra("team_name",teamPlayersPOJOArrayList.get(itemPosition).getTeam_name());

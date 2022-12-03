@@ -62,8 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         Edt_Email = findViewById(R.id.Edt_Email);
         EdtPassword = findViewById(R.id.EdtPassword);
 
-        Edt_Email.setText("judge@gmail.com");
-        EdtPassword.setText("test1234");
+//        Edt_Email.setText("seniorjudge@gmail.com");
+//        EdtPassword.setText("test1234");
 
         cirLoginButton = findViewById(R.id.cirLoginButton);
         cirLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -199,6 +199,7 @@ public class LoginActivity extends AppCompatActivity {
                                 JSONObject judgeObj = responseObj.getJSONObject("judge");
                                 String id = judgeObj.getString("id");
                                 String judge_no = judgeObj.getString("judge_no");
+                                String judgetype = judgeObj.getString("judgetype");
                                 String name = judgeObj.getString("name");
                                 String username = judgeObj.getString("username");
                                 String email = judgeObj.getString("email");
@@ -206,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_id", id);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_judge_no", judge_no);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_judge_type", judgetype);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_name", name);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_username", username);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_email", email);

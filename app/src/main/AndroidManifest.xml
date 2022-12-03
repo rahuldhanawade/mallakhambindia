@@ -4,7 +4,7 @@
     package="com.rahuldhanawade.www.amarproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -17,8 +17,12 @@
         android:theme="@style/Theme.AmarProject"
         tools:targetApi="31">
         <activity
+            android:name=".ScoreResultActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SplashActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,17 +30,25 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.ScoreResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.TeamDetails"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ScoreForm"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
