@@ -48,7 +48,7 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
         holder.tv_j2_score.setText(checkNullExcHandler(lp.getJ2_score().toString().trim()));
         holder.tv_j3_score.setText(checkNullExcHandler(lp.getJ3_score().toString().trim()));
         holder.tv_j4_score.setText(checkNullExcHandler(lp.getJ4_score().toString().trim()));
-        String setScore_id = lp.getScore_id().toString();
+        String setScore_id = lp.getScore_flag().toString();
         if(setScore_id.equals("1")){
            holder.iv_checked.setVisibility(View.VISIBLE);
         }else{
@@ -80,14 +80,14 @@ public class TeamPlayersAdapter extends RecyclerView.Adapter<TeamPlayersAdapter.
                 @Override
                 public void onClick(View view) {
                     int itemPosition = getLayoutPosition();
-                    String Score_id = teamPlayersPOJOArrayList.get(itemPosition).getScore_id();
+                    String Score_flag = teamPlayersPOJOArrayList.get(itemPosition).getScore_flag();
                     Intent i;
-                    if(Score_id.equals("1")){
+                    if(Score_flag.equals("1")){
                         i = new Intent(context, ScoreResultActivity.class);
                     }else{
                         i = new Intent(context, ScoreForm.class);
                     }
-                    i.putExtra("score_id",Score_id);
+                    i.putExtra("score_id",teamPlayersPOJOArrayList.get(itemPosition).getScore_id());
                     i.putExtra("player_id",teamPlayersPOJOArrayList.get(itemPosition).getId());
                     i.putExtra("player_name",teamPlayersPOJOArrayList.get(itemPosition).getParticipant_name());
                     i.putExtra("team_name",teamPlayersPOJOArrayList.get(itemPosition).getTeam_name());

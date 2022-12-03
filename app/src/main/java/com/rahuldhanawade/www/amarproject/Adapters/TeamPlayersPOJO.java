@@ -7,15 +7,16 @@ public class TeamPlayersPOJO {
     String age;
     String created_date;
     String gender;
-    String final_score,sr_judge_score,j1_score,j2_score,j3_score,j4_score;
 
-    public String getFinal_score() {
-        return final_score;
+    public String getScore_flag() {
+        return score_flag;
     }
 
-    public void setFinal_score(String final_score) {
-        this.final_score = final_score;
+    public void setScore_flag(String score_flag) {
+        this.score_flag = score_flag;
     }
+
+    String score_flag,sr_judge_score,j1_score,j2_score,j3_score,j4_score;
 
     public String getSr_judge_score() {
         return sr_judge_score;

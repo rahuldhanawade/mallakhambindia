@@ -76,7 +76,7 @@ public class ScoreForm extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_token = "",Str_year = "",score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String Str_token = "",Str_year = "",Str_score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String set_ele_A = "",set_ele_B = "",set_ele_C = "",set_comb = "",set_exec = "",set_orig = "";
     EditText edt_exec,edt_orig,edt_comments;
     TextView tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
@@ -85,6 +85,7 @@ public class ScoreForm extends AppCompatActivity {
     ImageView iv_a_minus,iv_a_add,iv_b_minus,iv_b_add,iv_c_minus,iv_c_add,iv_record;
     boolean isUserNew = true;
     Dialog dialogRecogAud;
+    int score_id = 0;
     int CombValue = 0, OtherValue = 0;
     int MinAValue = 0,MinBValue = 0,MinCValue = 0;
     int MaxAValue = 0,MaxBValue = 0,MaxCValue = 0;
@@ -104,7 +105,7 @@ public class ScoreForm extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(ScoreForm.this);
 
-        score_id = getIntent().getStringExtra("score_id");
+        Str_score_id = getIntent().getStringExtra("score_id");
         player_id = getIntent().getStringExtra("player_id");
         player_name = getIntent().getStringExtra("player_name");
         team_id = getIntent().getStringExtra("team_id");
@@ -113,6 +114,12 @@ public class ScoreForm extends AppCompatActivity {
         player_gender = getIntent().getStringExtra("player_gender");
         player_group = getIntent().getStringExtra("player_group");
         Log.d(TAG, "onCreate: score_id "+score_id);
+
+        if(checkNullExcHandler(Str_score_id).equals("")){
+            score_id = 0;
+        }else{
+            score_id = Integer.parseInt(Str_score_id);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_score_form);
         setSupportActionBar(toolbar);
@@ -368,7 +375,7 @@ public class ScoreForm extends AppCompatActivity {
                                             setQuestionListMarkArray(k,isChecked, finalQue_marks);
                                         }
                                     });
-                                    if(!score_id.equals("0")){
+                                    if(score_id > 0){
                                         JSONArray set_combArry = new JSONArray(set_comb);
                                         String value = set_combArry.getString(k);
                                         if(!value.equals("0.0")){
@@ -406,7 +413,7 @@ public class ScoreForm extends AppCompatActivity {
                                         UnitCValue = Integer.parseInt(marks);
                                     }
                                 }
-                                if(!score_id.equals("0")){
+                                if(score_id > 0){
                                     for(int q=0; q< Integer.parseInt(set_ele_A);q++){
                                         setValueInDifficulty(true,tv_a,MinAValue,MaxAValue,UnitAValue);
                                     }
@@ -708,7 +715,7 @@ public class ScoreForm extends AppCompatActivity {
                                 Str_token = token;
                                 Str_year = year;
                                 if(isUserNew){
-                                    if(!score_id.equals("0")){
+                                    if(score_id > 0){
                                         getPlayerScore();
                                     }else{
                                         addQuestionsList();
@@ -846,7 +853,7 @@ public class ScoreForm extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("score_id", score_id);
+                map.put("score_id", String.valueOf(score_id));
                 map.put("team_id", team_id);
                 map.put("player_id", player_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
@@ -980,7 +987,7 @@ public class ScoreForm extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("score_id", score_id);
+                map.put("score_id", String.valueOf(score_id));
                 map.put("team_id", team_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("judge_no", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_no"));

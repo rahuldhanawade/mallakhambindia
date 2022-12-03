@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         loadingDialog.dismissDialog();
-                        Log.d("Response",""+response);
+                        Log.d("LOGIN_URLResponse",""+response);
 
                         try {
                             JSONObject responseObj = new JSONObject(response);

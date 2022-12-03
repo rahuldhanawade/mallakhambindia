@@ -203,7 +203,8 @@ public class TeamDetails extends AppCompatActivity {
 
                                 teamPlayersPOJO = new TeamPlayersPOJO();
                                 teamPlayersPOJO.setId(Playersdataobj.getString("player_id"));
-                                teamPlayersPOJO.setScore_id(Playersdataobj.getString("score_flag"));
+                                teamPlayersPOJO.setScore_id(Playersdataobj.getString("score_id"));
+                                teamPlayersPOJO.setScore_flag(Playersdataobj.getString("score_flag"));
                                 teamPlayersPOJO.setParticipant_name(Playersdataobj.getString("participant_name"));
                                 teamPlayersPOJO.setDob(Playersdataobj.getString("dob"));
                                 teamPlayersPOJO.setAge(Playersdataobj.getString("age"));

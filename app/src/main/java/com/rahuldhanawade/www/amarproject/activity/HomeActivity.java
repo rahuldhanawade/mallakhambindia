@@ -569,8 +569,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch(item.getItemId()){
             case R.id.nav_about_us:
-                Intent newVehicleIntent = new Intent(HomeActivity.this, TeamDetails.class);
-                startActivity(newVehicleIntent);
                 break;
             case R.id.nav_logout:
                 UtilitySharedPreferences.clearPref(HomeActivity.this);
