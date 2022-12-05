@@ -1,60 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="2dp"
-    android:elevation="3dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="3dp"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="10"
-        android:id="@+id/linear_main"
-        android:gravity="center"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/tv_jdg_name"
-            android:layout_weight="6"
-            android:background="@drawable/table_drawable"
-            android:textStyle="bold"
-            android:gravity="start|center"
-            android:padding="10dp"
-            android:layout_margin="2dp"
-            style="@style/TitleTextStyle"
-            android:layout_height="match_parent"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:id="@+id/tv_jdg_scr"
-            android:layout_weight="2"
-            android:background="@drawable/table_drawable"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:padding="10dp"
-            android:layout_margin="2dp"
-            style="@style/TitleTextStyle"
-            android:layout_height="match_parent"/>
-
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:padding="10dp"
-            android:layout_margin="2dp"
-            android:background="@color/black"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:id="@+id/linear_main"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:src="@drawable/ic_eye"
-                android:layout_height="wrap_content"
-                app:tint="@color/white" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="8"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="5"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:text="Name:"
+                            android:textStyle="bold"
+                            android:gravity="start|center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/tv_jdg_name"
+                            android:layout_weight="3"
+                            android:textStyle="bold"
+                            android:textColor="@color/colorAccent"
+                            android:gravity="start"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_weight="1"
+                        android:weightSum="5"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:text="Total:"
+                            android:textStyle="bold"
+                            android:gravity="start|center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/tv_jdg_tol"
+                            android:layout_weight="3"
+                            android:textStyle="bold"
+                            android:gravity="start"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/black"
+                    android:layout_height="1dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Execution"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv_jdg_exc"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/colorAccent"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/black"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Combination"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv_jdg_comb"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/colorAccent"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/black"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Difficulty"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv_jdg_diff"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/colorAccent"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@color/colorAccent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:src="@drawable/ic_eye"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>
+

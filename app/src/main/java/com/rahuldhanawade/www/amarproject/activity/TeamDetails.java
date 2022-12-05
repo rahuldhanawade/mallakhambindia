@@ -178,6 +178,8 @@ public class TeamDetails extends AppCompatActivity {
 
     private void getTeamPlayerList() {
 
+        teamPlayersPOJOArrayList.clear();
+
         loadingDialog.startLoadingDialog();
 
         String GetTeamPlayersURL=ROOT_URL+"get_team_players";
@@ -306,5 +308,10 @@ public class TeamDetails extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         RequestQueue requestQueue = Volley.newRequestQueue(TeamDetails.this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

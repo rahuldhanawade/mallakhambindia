@@ -25,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.rahuldhanawade.www.amarproject.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -183,6 +185,30 @@ public class CommonMethods
 		}else {
 			return Str_value;
 		}
+	}
+
+	public static void DisplayPopUp(Activity myActivity,String message){
+		Dialog dialog = new Dialog(myActivity);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.setCancelable(true);
+		dialog.setContentView(R.layout.pop_up_error);
+		Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(
+				new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		dialog.show();
+
+		TextView textView=dialog.findViewById(R.id.tv_pop_up_error);
+		textView.setText(message);
+		TextView okButton = (TextView) dialog.findViewById(R.id.btn_ok_pop_error);
+		okButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				dialog.dismiss();
+			}
+		});
+
 	}
 
 	public static String getDayFromDate(String date, String type){

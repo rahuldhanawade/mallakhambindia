@@ -916,7 +916,7 @@ public class ScoreForm extends AppCompatActivity {
         String Str_marklist = marklist.toString().replace("[","{");
         String combination_json = Str_marklist.replace("]","}");
 
-        Log.d(TAG, "SubmitScoreForm: "+combination_json);
+//        Log.d(TAG, "SubmitScoreForm: "+combination_json);
 
         loadingDialog.startLoadingDialog();
 
@@ -936,11 +936,15 @@ public class ScoreForm extends AppCompatActivity {
                             String message = questionlistObj.getString("message");
                             if(status.equals("true")){
                                 DisplayToastSuccess(ScoreForm.this,message);
-                                Intent i = new Intent(ScoreForm.this,TeamDetails.class);
-                                i.putExtra("team_id",team_id);
+                                Intent i = new Intent(ScoreForm.this,ScoreResultActivity.class);
+                                i.putExtra("score_id",Str_score_id);
+                                i.putExtra("player_id",player_id);
+                                i.putExtra("player_name",player_name);
                                 i.putExtra("team_name",team_name);
-                                i.putExtra("team_gender",player_gender);
-                                i.putExtra("team_group",player_group);
+                                i.putExtra("team_id",team_id);
+                                i.putExtra("player_age",player_age);
+                                i.putExtra("player_gender",player_gender);
+                                i.putExtra("player_group",player_group);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                             }else{

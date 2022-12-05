@@ -1,6 +1,7 @@
 package com.rahuldhanawade.www.amarproject.activity;
 
 import static com.rahuldhanawade.www.amarproject.RestClient.RestClient.ROOT_URL;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayPopUp;
 import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastError;
 import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.checkNullExcHandler;
 import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.getCapsSentences;
@@ -61,7 +62,7 @@ public class ScoreResultActivity extends AppCompatActivity {
     CardView card_judge_score;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout linear_all_judge,linear_questions;
-    TextView tv_sr_plyr_name,tv_sr_plyr_age,tv_sr_plyr_goup,tv_sr_plyr_gender;
+    TextView tv_edit_score,tv_sr_plyr_name,tv_sr_plyr_age,tv_sr_plyr_goup,tv_sr_plyr_gender;
     TextView tv_sr_a_marks,tv_sr_b_marks,tv_sr_c_marks,tv_sr_comb,tv_sr_diff_comb,tv_sr_exc,tv_sr_orig,tv_sr_final_value,tv_sr_comment;
     TextView tv_sr_a,tv_sr_b,tv_sr_c;
     JSONArray questinListArry;
@@ -101,6 +102,22 @@ public class ScoreResultActivity extends AppCompatActivity {
 
     private void Init() {
 
+        tv_edit_score = findViewById(R.id.tv_edit_score);
+        tv_edit_score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ScoreResultActivity.this,ScoreForm.class);
+                i.putExtra("score_id",score_id);
+                i.putExtra("player_id",player_id);
+                i.putExtra("player_name",player_name);
+                i.putExtra("team_name",team_name);
+                i.putExtra("team_id",team_id);
+                i.putExtra("player_age",player_age);
+                i.putExtra("player_gender",player_gender);
+                i.putExtra("player_group",player_group);
+                startActivity(i);
+            }
+        });
         tv_sr_plyr_name = findViewById(R.id.tv_sr_plyr_name);
         tv_sr_plyr_age = findViewById(R.id.tv_sr_plyr_age);
         tv_sr_plyr_goup = findViewById(R.id.tv_sr_plyr_goup);
@@ -162,6 +179,15 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     String orig = data_obj.getString("originality");
                                     String comment = data_obj.getString("comment");
                                     String total_score = data_obj.getString("total_score");
+                                    String update_recall = data_obj.getString("update_recall");
+
+                                    if(!Str_judgetype.equals("Senior Judge")){
+                                        if(update_recall.equals("0")){
+                                            tv_edit_score.setVisibility(View.VISIBLE);
+                                        }else{
+                                            tv_edit_score.setVisibility(View.GONE);
+                                        }
+                                    }
 
                                     combination_json = combination_json.replace("{","[");
                                     combination_json = combination_json.replace("}","]");
@@ -265,6 +291,12 @@ public class ScoreResultActivity extends AppCompatActivity {
                             String status = responseObj.getString("success");
                             String message = responseObj.getString("message");
                             if(status.equals("true")){
+                                JSONObject alertObj = responseObj.getJSONObject("alert");
+                                String AlrtStatus = alertObj.getString("status");
+                                if(AlrtStatus.equals("true")){
+                                    String Alrtvmessage = alertObj.getString("message");
+                                    DisplayPopUp(ScoreResultActivity.this,Alrtvmessage);
+                                }
                                 JSONArray dataArry = responseObj.getJSONArray("data");
                                 if(dataArry.length() > 0){
                                     card_judge_score.setVisibility(View.VISIBLE);
@@ -277,20 +309,29 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     String judge_no = data_obj.getString("judge_no");
                                     String name = data_obj.getString("name");
                                     String total_score = data_obj.getString("total_score");
+                                    String execution = data_obj.getString("execution");
+                                    String originality = data_obj.getString("originality");
+                                    String combination = data_obj.getString("combination");
 
                                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                     View rowView = inflater.inflate(R.layout.judge_score_list_layout, null);
 
                                     LinearLayout linear_main = rowView.findViewById(R.id.linear_main);
                                     TextView tv_jdg_name = rowView.findViewById(R.id.tv_jdg_name);
-                                    TextView tv_jdg_scr = rowView.findViewById(R.id.tv_jdg_scr);
+                                    TextView tv_jdg_tol = rowView.findViewById(R.id.tv_jdg_tol);
+                                    TextView tv_jdg_exc = rowView.findViewById(R.id.tv_jdg_exc);
+                                    TextView tv_jdg_comb = rowView.findViewById(R.id.tv_jdg_comb);
+                                    TextView tv_jdg_diff = rowView.findViewById(R.id.tv_jdg_diff);
 
                                     if(judge_type.equals("Senior Judge")){
                                         tv_jdg_name.setText(judge_no+". Self");
                                     }else {
                                         tv_jdg_name.setText(judge_no+". "+name);
                                     }
-                                    tv_jdg_scr.setText(total_score);
+                                    tv_jdg_tol.setText(total_score);
+                                    tv_jdg_exc.setText(execution);
+                                    tv_jdg_diff.setText(originality);
+                                    tv_jdg_comb.setText(combination);
 
                                     linear_main.setOnClickListener(new View.OnClickListener() {
                                         @Override
