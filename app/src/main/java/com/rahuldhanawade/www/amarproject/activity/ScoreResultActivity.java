@@ -169,7 +169,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         loadingDialog.dismissDialog();
-                        Log.d("Response",""+response);
+//                        Log.d("GETPLYSCRResponse",""+response);
                         try {
                             JSONObject questionlistObj = new JSONObject(response);
                             String status = questionlistObj.getString("success");

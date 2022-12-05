@@ -933,9 +933,15 @@ public class ScoreForm extends AppCompatActivity {
                             String status = questionlistObj.getString("success");
                             String message = questionlistObj.getString("message");
                             if(status.equals("true")){
+                                JSONObject dataObj = questionlistObj.getJSONObject("data");
+                                String last_insert_id = dataObj.getString("last_insert_id");
                                 DisplayToastSuccess(ScoreForm.this,message);
                                 Intent i = new Intent(ScoreForm.this,ScoreResultActivity.class);
-                                i.putExtra("score_id",Str_score_id);
+                                if(Str_score_id != null && !Str_score_id.equals("null") && !Str_score_id.equals("")){
+                                    i.putExtra("score_id",Str_score_id);
+                                }else {
+                                    i.putExtra("score_id",last_insert_id);
+                                }
                                 i.putExtra("player_id",player_id);
                                 i.putExtra("player_name",player_name);
                                 i.putExtra("team_name",team_name);
