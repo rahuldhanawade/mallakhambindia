@@ -17,8 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -59,6 +58,7 @@ public class ScoreResultActivity extends AppCompatActivity {
     String score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String UnitAValue = "",UnitBValue = "",UnitCValue = "";
 
+    ImageView iv_refesh_scoreform;
     CardView card_judge_score;
     BottomSheetDialog bottomSheetDialog;
     LinearLayout linear_all_judge,linear_questions;
@@ -102,6 +102,15 @@ public class ScoreResultActivity extends AppCompatActivity {
 
     private void Init() {
 
+        iv_refesh_scoreform = findViewById(R.id.iv_refesh_scoreform);
+        iv_refesh_scoreform.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                linear_all_judge.removeAllViews();
+                linear_questions.removeAllViews();
+                UserLogin();
+            }
+        });
         tv_edit_score = findViewById(R.id.tv_edit_score);
         tv_edit_score.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,18 +319,25 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     String name = data_obj.getString("name");
                                     String total_score = data_obj.getString("total_score");
                                     String execution = data_obj.getString("execution");
-                                    String originality = data_obj.getString("originality");
+                                    String difficulty = data_obj.getString("difficulty");
                                     String combination = data_obj.getString("combination");
+                                    String combination_color = data_obj.getString("combination_color");
+                                    String difficulty_color = data_obj.getString("difficulty_color");
 
                                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                                     View rowView = inflater.inflate(R.layout.judge_score_list_layout, null);
 
                                     LinearLayout linear_main = rowView.findViewById(R.id.linear_main);
+                                    LinearLayout linear_comb = rowView.findViewById(R.id.linear_comb);
+                                    LinearLayout linear_diff = rowView.findViewById(R.id.linear_diff);
                                     TextView tv_jdg_name = rowView.findViewById(R.id.tv_jdg_name);
                                     TextView tv_jdg_tol = rowView.findViewById(R.id.tv_jdg_tol);
                                     TextView tv_jdg_exc = rowView.findViewById(R.id.tv_jdg_exc);
                                     TextView tv_jdg_comb = rowView.findViewById(R.id.tv_jdg_comb);
                                     TextView tv_jdg_diff = rowView.findViewById(R.id.tv_jdg_diff);
+
+                                    setColorLinearBackground(linear_comb,combination_color);
+                                    setColorLinearBackground(linear_diff,difficulty_color);
 
                                     if(judge_type.equals("Senior Judge")){
                                         tv_jdg_name.setText(judge_no+". Self");
@@ -330,7 +346,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     }
                                     tv_jdg_tol.setText(total_score);
                                     tv_jdg_exc.setText(execution);
-                                    tv_jdg_diff.setText(originality);
+                                    tv_jdg_diff.setText(difficulty);
                                     tv_jdg_comb.setText(combination);
 
                                     linear_main.setOnClickListener(new View.OnClickListener() {
@@ -412,6 +428,14 @@ public class ScoreResultActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void setColorLinearBackground(LinearLayout linearLayout, String bcakground_color) {
+        if(bcakground_color.equals("green")){
+            linearLayout.setBackground(getDrawable(R.color.green));
+        }else{
+            linearLayout.setBackground(getDrawable(R.color.red_pink));
+        }
+    }
+
     private void addQuestionsList() {
 
         loadingDialog.startLoadingDialog();
@@ -431,9 +455,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                             String status = questionlistObj.getString("success");
                             String message = questionlistObj.getString("message");
                             if(status.equals("true")){
-                                String data = questionlistObj.getString("data");
-                                JSONObject dataObj = new JSONObject(data);
-                                questinListArry = dataObj.getJSONArray("data");
+                                questinListArry = questionlistObj.getJSONArray("data");
                                 for(int i=0; i< questinListArry.length();i++){
                                     JSONObject quedata_obj = questinListArry.getJSONObject(i);
                                     String que_question = quedata_obj.getString("question");
@@ -458,7 +480,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     linear_questions.addView(rowView);
                                 }
 
-                                JSONArray elementArry = dataObj.getJSONArray("element");
+                                JSONArray elementArry = questionlistObj.getJSONArray("element");
                                 for(int k=0; k< elementArry.length();k++){
                                     JSONObject elementObj = elementArry.getJSONObject(k);
                                     String element_name = elementObj.getString("element_name");
@@ -607,28 +629,30 @@ public class ScoreResultActivity extends AppCompatActivity {
         combination_json = combination_json.replace("{","[");
         combination_json = combination_json.replace("}","]");
 
-        for(int i=0; i< questinListArry.length();i++){
-            JSONObject quedata_obj = questinListArry.getJSONObject(i);
-            String que_question = quedata_obj.getString("question");
-            String que_marks = quedata_obj.getString("marks");
+        if(questinListArry != null && questinListArry.length() > 0){
+            for(int i=0; i< questinListArry.length();i++){
+                JSONObject quedata_obj = questinListArry.getJSONObject(i);
+                String que_question = quedata_obj.getString("question");
+                String que_marks = quedata_obj.getString("marks");
 
-            JSONArray set_combArry = new JSONArray(combination_json);
-            String value = set_combArry.getString(i);
+                JSONArray set_combArry = new JSONArray(combination_json);
+                String value = set_combArry.getString(i);
 
-            LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.botom_question_list_layout, null);
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View rowView = inflater.inflate(R.layout.botom_question_list_layout, null);
 
-            TextView tv_botom_que_name = rowView.findViewById(R.id.tv_botom_que_name);
-            TextView tv_botom_tot_marks = rowView.findViewById(R.id.tv_botom_tot_marks);
-            TextView tv_botom_obt_marks = rowView.findViewById(R.id.tv_botom_obt_marks);
+                TextView tv_botom_que_name = rowView.findViewById(R.id.tv_botom_que_name);
+                TextView tv_botom_tot_marks = rowView.findViewById(R.id.tv_botom_tot_marks);
+                TextView tv_botom_obt_marks = rowView.findViewById(R.id.tv_botom_obt_marks);
 
-            tv_botom_que_name.setText(que_question);
-            tv_botom_tot_marks.setText(que_marks);
+                tv_botom_que_name.setText(que_question);
+                tv_botom_tot_marks.setText(que_marks);
 
-            BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
-            tv_botom_obt_marks.setText(bd.toString());
+                BigDecimal bd = new BigDecimal(value).setScale(2, RoundingMode.HALF_UP);
+                tv_botom_obt_marks.setText(bd.toString());
 
-            linear_questions.addView(rowView);
+                linear_questions.addView(rowView);
+            }
         }
     }
 
@@ -704,5 +728,17 @@ public class ScoreResultActivity extends AppCompatActivity {
         stringRequest.setRetryPolicy(policy);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(ScoreResultActivity.this, TeamDetails.class);
+        i.putExtra("team_id",team_id);
+        i.putExtra("team_name",team_name);
+        i.putExtra("team_gender",player_gender);
+        i.putExtra("team_group",player_group);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 }

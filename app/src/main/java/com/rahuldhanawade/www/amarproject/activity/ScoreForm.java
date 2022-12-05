@@ -343,9 +343,7 @@ public class ScoreForm extends AppCompatActivity {
                             String status = questionlistObj.getString("success");
                             String message = questionlistObj.getString("message");
                             if(status.equals("true")){
-                                String data = questionlistObj.getString("data");
-                                JSONObject dataObj = new JSONObject(data);
-                                JSONArray questinListArry = dataObj.getJSONArray("data");
+                                JSONArray questinListArry = questionlistObj.getJSONArray("data");
                                 for(int i=0; i< questinListArry.length();i++){
                                     JSONObject data_obj = questinListArry.getJSONObject(i);
                                     String que_question = data_obj.getString("question");
@@ -386,7 +384,7 @@ public class ScoreForm extends AppCompatActivity {
                                     linear_questions.addView(rowView);
                                 }
 
-                                JSONArray elementArry = dataObj.getJSONArray("element");
+                                JSONArray elementArry = questionlistObj.getJSONArray("element");
                                 for(int k=0; k< elementArry.length();k++){
                                     JSONObject elementObj = elementArry.getJSONObject(k);
                                     String element_name = elementObj.getString("element_name");
@@ -805,7 +803,7 @@ public class ScoreForm extends AppCompatActivity {
 
                                     tv_submit.setText("Update");
 
-                                    Log.d(TAG, "GETPLYonResponse: "+set_ele_A+"\n"+set_ele_B+"\n"+set_ele_C+"\n"+set_comb+"\n"+set_exec+"\n"+set_orig);
+//                                    Log.d(TAG, "GETPLYonResponse: "+set_ele_A+"\n"+set_ele_B+"\n"+set_ele_C+"\n"+set_comb+"\n"+set_exec+"\n"+set_orig);
                                 }
                                 addQuestionsList();
                             }else{
@@ -945,7 +943,7 @@ public class ScoreForm extends AppCompatActivity {
                                 i.putExtra("player_age",player_age);
                                 i.putExtra("player_gender",player_gender);
                                 i.putExtra("player_group",player_group);
-                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                             }else{
                                 DisplayToastError(ScoreForm.this,message);

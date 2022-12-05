@@ -8,6 +8,8 @@
 
     <!--normal colors-->
     <color name="black">#020000</color>
+    <color name="red_pink">#C1F44336</color>
+    <color name="green">#A18BC34A</color>
 
 
     <!--colors for light mode-->

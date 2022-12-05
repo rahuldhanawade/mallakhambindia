@@ -8,8 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -50,6 +52,7 @@ public class TeamDetails extends AppCompatActivity {
     LoadingDialog loadingDialog;
     String Str_token = "", Str_year = "", str_team_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
 
+    SwipeRefreshLayout refreshLayout;
     TextView tv_players_empty,tv_plyr_count,tv_plyr_gender,tv_plyr_group;
     RecyclerView recyclerView;
     TeamPlayersAdapter teamPlayersAdapter;
@@ -100,6 +103,23 @@ public class TeamDetails extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(TeamDetails.this));
         recyclerView.setAdapter(teamPlayersAdapter);
+
+
+        refreshLayout = findViewById(R.id.swref_team_details);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        teamPlayersPOJOArrayList.clear();
+                        UserLogin();
+                        teamPlayersAdapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                },1000);
+            }
+        });
 
         UserLogin();
     }
@@ -310,8 +330,4 @@ public class TeamDetails extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 }

@@ -112,41 +112,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:text="Execution"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:layout_margin="2dp"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:id="@+id/tv_jdg_exc"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:textColor="@color/colorAccent"
-                            android:layout_margin="2dp"
-                            style="@style/TitleTextStyle"
-                            android:layout_height="wrap_content"/>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/black"
-                        android:layout_height="match_parent"/>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:id="@+id/linear_comb"
                         android:orientation="vertical"
                         android:layout_height="wrap_content">
 
@@ -165,7 +131,43 @@
                             android:id="@+id/tv_jdg_comb"
                             android:textStyle="bold"
                             android:gravity="center"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/black"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/black"
+                        android:layout_height="match_parent"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:id="@+id/linear_diff"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:text="Difficulty"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:layout_margin="2dp"
+                            style="@style/TitleTextStyle"
+                            android:layout_height="wrap_content"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:id="@+id/tv_jdg_diff"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
                             android:layout_margin="2dp"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>
@@ -187,7 +189,7 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:text="Difficulty"
+                            android:text="Execution"
                             android:textStyle="bold"
                             android:gravity="center"
                             android:padding="5dp"
@@ -197,10 +199,10 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:id="@+id/tv_jdg_diff"
+                            android:id="@+id/tv_jdg_exc"
                             android:textStyle="bold"
                             android:gravity="center"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/black"
                             android:layout_margin="2dp"
                             style="@style/TitleTextStyle"
                             android:layout_height="wrap_content"/>

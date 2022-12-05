@@ -158,20 +158,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"/>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swref_team_details"
                 android:layout_width="match_parent"
-                android:id="@+id/recy_team_player"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:id="@+id/tv_teams_player_empty"
-                android:gravity="center"
-                android:fontFamily="@font/calibri_regular"
-                android:textSize="20sp"
-                android:visibility="gone"
-                android:text="No data found"
-                android:layout_height="match_parent"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/recy_team_player"
+                    android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:id="@+id/tv_teams_player_empty"
+                    android:gravity="center"
+                    android:fontFamily="@font/calibri_regular"
+                    android:textSize="20sp"
+                    android:visibility="gone"
+                    android:text="No data found"
+                    android:layout_height="match_parent"/>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 
