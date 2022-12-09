@@ -57,6 +57,7 @@ public class ScoreResultActivity extends AppCompatActivity {
     String Str_judgetype = "",Str_token = "",Str_year = "",set_comb = "";
     String score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String UnitAValue = "",UnitBValue = "",UnitCValue = "";
+    boolean is_visible = true;
 
     ImageView iv_refesh_scoreform;
     CardView card_judge_score;
@@ -189,6 +190,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                                     String comment = data_obj.getString("comment");
                                     String total_score = data_obj.getString("total_score");
                                     String update_recall = data_obj.getString("update_recall");
+                                    int final_score_id = data_obj.optInt("final_score_id");
 
                                     if(!Str_judgetype.equals("Senior Judge")){
                                         if(update_recall.equals("0")){
@@ -196,6 +198,12 @@ public class ScoreResultActivity extends AppCompatActivity {
                                         }else{
                                             tv_edit_score.setVisibility(View.GONE);
                                         }
+                                    }
+
+
+                                    if(final_score_id > 0){
+                                        is_visible = false;
+                                        tv_edit_score.setVisibility(View.GONE);
                                     }
 
                                     combination_json = combination_json.replace("{","[");
@@ -582,6 +590,11 @@ public class ScoreResultActivity extends AppCompatActivity {
         TextView tv_botom_comment = bottomSheetDialog.findViewById(R.id.tv_botom_comment);
         TextView tv_botom_cancel = bottomSheetDialog.findViewById(R.id.tv_botom_cancel);
         TextView tv_botom_Edit = bottomSheetDialog.findViewById(R.id.tv_botom_Edit);
+        LinearLayout linear_bottomnav = bottomSheetDialog.findViewById(R.id.linear_bottomnav);
+
+        if(!is_visible){
+            linear_bottomnav.setVisibility(View.GONE);
+        }
 
         tv_bt_all_judge.setText(name);
         tv_botom_a.setText(data_obj.getString("element_A"));

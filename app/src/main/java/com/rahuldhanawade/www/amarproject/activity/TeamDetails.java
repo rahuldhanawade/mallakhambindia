@@ -51,6 +51,7 @@ public class TeamDetails extends AppCompatActivity {
     private static final String TAG = TeamDetails.class.getSimpleName();
     LoadingDialog loadingDialog;
     String Str_token = "", Str_year = "", str_team_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
+    boolean is_back = true;
 
     SwipeRefreshLayout refreshLayout;
     TextView tv_players_empty,tv_plyr_count,tv_plyr_gender,tv_plyr_group;
@@ -109,6 +110,7 @@ public class TeamDetails extends AppCompatActivity {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                is_back = false;
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -209,6 +211,7 @@ public class TeamDetails extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, GetTeamPlayersURL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                is_back = true;
                 loadingDialog.dismissDialog();
                 Log.d("Response",""+response);
                 if (response != null && response.length() > 0) {
@@ -330,4 +333,10 @@ public class TeamDetails extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(is_back){
+            super.onBackPressed();
+        }
+    }
 }

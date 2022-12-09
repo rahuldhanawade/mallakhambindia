@@ -32,13 +32,17 @@ import com.rahuldhanawade.www.amarproject.Utils.UtilitySharedPreferences;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SplashActivity extends AppCompatActivity {
 
     ImageView iv_logo;
-    String Str_id = "";
+    String Str_id = "", isAppStatus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +60,80 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                if(Str_id!=null && !Str_id.equalsIgnoreCase("") && !Str_id.equals("undefined")) {
-                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                if(isAppStatus.equals("true")){
                     finish();
                 }else{
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                    finish();
+                    if(Str_id!=null && !Str_id.equalsIgnoreCase("") && !Str_id.equals("undefined")) {
+                        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                        finish();
+                    }else{
+                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        finish();
+                    }
                 }
             }
         },5000);
+
+        IsAppActive();
+    }
+
+    private void IsAppActive() {
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+
+        String APP_CLOSE_URL = ROOT_URL+"appclose";
+
+        Log.d("APP_CLOSE_URL",""+APP_CLOSE_URL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, APP_CLOSE_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP_CLOSEResponse",""+response);
+
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            isAppStatus = responseObj.getString("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(SplashActivity.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(SplashActivity.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(SplashActivity.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(SplashActivity.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(SplashActivity.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("date", formattedDate);
+                Log.d("LoginParamas",""+map.toString());
+                return map;
+            }
+        };
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 }

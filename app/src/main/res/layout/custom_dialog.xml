@@ -16,14 +16,16 @@
         android:padding="5dp"
         android:layout_height="wrap_content">
 
-        <pl.droidsonroids.gif.GifImageView
+        <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/gif_logo" />
+            android:src="@drawable/app_loaders" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="Please Wait...."
             android:textSize="20sp"

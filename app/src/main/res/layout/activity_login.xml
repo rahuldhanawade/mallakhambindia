@@ -43,6 +43,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:padding="20dp"
                     android:layout_height="200dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
