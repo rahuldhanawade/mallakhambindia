@@ -74,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         },5000);
 
-        IsAppActive();
+//        IsAppActive();
     }
 
     private void IsAppActive() {

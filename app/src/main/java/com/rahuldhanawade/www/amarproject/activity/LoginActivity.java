@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         Edt_Email = findViewById(R.id.Edt_Email);
         EdtPassword = findViewById(R.id.EdtPassword);
 
-//        Edt_Email.setText("seniorjudge@gmail.com");
+//        Edt_Email.setText("btp_sr@gmail.com");
 //        EdtPassword.setText("test1234");
 
         cirLoginButton = findViewById(R.id.cirLoginButton);
