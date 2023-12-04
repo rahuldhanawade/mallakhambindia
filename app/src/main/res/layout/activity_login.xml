@@ -38,7 +38,7 @@
                     android:textStyle="bold"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Bhausaheb Ranade Navodit Mallakhamb Competition 2022" />
+                    android:text="Bhausaheb Ranade Navodit Mallakhamb Competition 2023" />
 
                 <ImageView
                     android:layout_width="0dp"
@@ -168,7 +168,7 @@
                         style="@style/viewParent.headerText.NoMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2022"
+                        android:text="2023"
                         android:textColor="@color/colorAccent"
                         android:textSize="12sp" />
 
