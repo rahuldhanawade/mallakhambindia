@@ -76,10 +76,10 @@ public class ScoreForm extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_token = "",Str_year = "",Str_score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String Str_name = "",Str_judge_type = "",Str_token = "",Str_year = "",Str_score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String set_ele_A = "",set_ele_B = "",set_ele_C = "",set_comb = "",set_exec = "",set_orig = "";
     EditText edt_exec,edt_orig,edt_comments;
-    TextView tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
+    TextView tv_judge_name,tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
     TextView tv_diff_comb,tv_comb,tv_final_value,tv_a,tv_b,tv_c,tv_submit;
     TextView tv_a_marks,tv_b_marks,tv_c_marks;
     ImageView iv_a_minus,iv_a_add,iv_b_minus,iv_b_add,iv_c_minus,iv_c_add,iv_record;
@@ -104,7 +104,8 @@ public class ScoreForm extends AppCompatActivity {
         setContentView(R.layout.activity_score_form);
 
         loadingDialog = new LoadingDialog(ScoreForm.this);
-
+        Str_name = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_name");
+        Str_judge_type = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_type");
         Str_score_id = getIntent().getStringExtra("score_id");
         player_id = getIntent().getStringExtra("player_id");
         player_name = getIntent().getStringExtra("player_name");
@@ -191,6 +192,10 @@ public class ScoreForm extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void init(){
 
+        tv_judge_name = findViewById(R.id.tv_judge_name);
+        if(Str_name!=null && !Str_name.equalsIgnoreCase("")) {
+            tv_judge_name.setText(Str_name.trim()+ " ("+Str_judge_type+")");
+        }
         tv_plyr_name = findViewById(R.id.tv_plyr_name);
         tv_plyr_age = findViewById(R.id.tv_plyr_age);
         tv_plyr_goup = findViewById(R.id.tv_plyr_goup);
