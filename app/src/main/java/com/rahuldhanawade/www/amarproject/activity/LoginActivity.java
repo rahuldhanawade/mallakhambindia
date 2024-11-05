@@ -12,7 +12,10 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -34,17 +37,23 @@ import com.rahuldhanawade.www.amarproject.Utils.LoadingDialog;
 import com.rahuldhanawade.www.amarproject.Utils.MyValidator;
 import com.rahuldhanawade.www.amarproject.Utils.UtilitySharedPreferences;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
     TextView cirLoginButton,tv_ver_code;
     EditText Edt_Email,EdtPassword;
+    Spinner Spnlocation;
+    List<String> locationsList = new ArrayList<>();
     private LoadingDialog loadingDialog;
+    String Str_selectedLocation = "";
     private String TAG = "LoginActivity" ;
 
     @Override
@@ -59,11 +68,14 @@ public class LoginActivity extends AppCompatActivity {
 
     public void init(){
 
+        locationsList.add("Select Location");
+
         Edt_Email = findViewById(R.id.Edt_Email);
         EdtPassword = findViewById(R.id.EdtPassword);
+        Spnlocation = findViewById(R.id.spn_location);
 
-//        Edt_Email.setText("btp_sr@gmail.com");
-//        EdtPassword.setText("test1234");
+        Edt_Email.setText("umhsr@gmail.com");
+        EdtPassword.setText("test1234");
 
         cirLoginButton = findViewById(R.id.cirLoginButton);
         cirLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +97,22 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+
+        Spnlocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                Str_selectedLocation = parentView.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // Handle the case where no item is selected
+            }
+        });
+
+        GetLocationList();
+
     }
 
     private boolean isValid() {
@@ -99,6 +127,11 @@ public class LoginActivity extends AppCompatActivity {
         if (!MyValidator.isValidNormalPassword(EdtPassword)) {
             EdtPassword.requestFocus();
             DisplayToastError(LoginActivity.this,"Please Enter Valid Password");
+            result = false;
+        }
+
+        if (!MyValidator.isValidSpinner(Spnlocation)) {
+            DisplayToastError(LoginActivity.this,"Please Select Location");
             result = false;
         }
 
@@ -165,6 +198,7 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("email", Str_email);
                 map.put("password", Str_password);
+                map.put("location", Str_selectedLocation);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -212,6 +246,7 @@ public class LoginActivity extends AppCompatActivity {
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_username", username);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_email", email);
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_mobile_no", mobile_no);
+                                UtilitySharedPreferences.setPrefs(getApplicationContext(), "user_location", Str_selectedLocation);
 
                                 DisplayToastSuccess(LoginActivity.this,"Login Successful");
 
@@ -232,6 +267,65 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         loadingDialog.dismissDialog();
+                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                            DisplayToastError(LoginActivity.this,"Server is not connected to internet.");
+                        } else if (error instanceof AuthFailureError) {
+                            DisplayToastError(LoginActivity.this,"Server couldn't find the authenticated request.");
+                        } else if (error instanceof ServerError) {
+                            DisplayToastError(LoginActivity.this,"Server is not responding.Please try Again Later");
+                        } else if (error instanceof NetworkError) {
+                            DisplayToastError(LoginActivity.this,"Your device is not connected to internet.");
+                        } else if (error instanceof ParseError) {
+                            DisplayToastError(LoginActivity.this,"Parse Error (because of invalid json or xml).");
+                        }
+                    }
+                });
+
+        int socketTimeout = 50000; //30 seconds - change to what you want
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void GetLocationList() {
+
+        String GetLocationList_URL = ROOT_URL+"location";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, GetLocationList_URL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response",response);
+
+                        try {
+                            JSONObject responseObj = new JSONObject(response);
+                            if(responseObj.toString().contains("status")){
+                                String status = responseObj.getString("status");
+                                DisplayToastError(LoginActivity.this,status);
+                            }else if(responseObj.toString().contains("data")){
+                                JSONArray locatAry = responseObj.getJSONArray("data");
+                                for(int i = 0; i < locatAry.length(); i++){
+                                    String loca = locatAry.get(i).toString();
+                                    locationsList.add(loca);
+                                }
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_spinner_item, locationsList);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                Spnlocation.setAdapter(adapter);
+
+                            }else{
+                                DisplayToastError(LoginActivity.this,"Sorry For the Inconvince please try again later..");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
                         if (error instanceof TimeoutError || error instanceof NoConnectionError) {
                             DisplayToastError(LoginActivity.this,"Server is not connected to internet.");
                         } else if (error instanceof AuthFailureError) {
