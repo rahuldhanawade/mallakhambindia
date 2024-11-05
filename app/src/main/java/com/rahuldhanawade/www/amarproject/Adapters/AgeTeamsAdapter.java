@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,12 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
     private Context context;
     private ArrayList<AgeTeamsPOJO> ageTeamsPOJOS_list;
 
+    private ArrayList<AgeTeamsPOJO> ageTeamsPOJOS_Filterlist;
+
     public AgeTeamsAdapter(Context context, ArrayList<AgeTeamsPOJO> ageTeamsPOJOS_list) {
         this.context = context;
         this.ageTeamsPOJOS_list = ageTeamsPOJOS_list;
+        this.ageTeamsPOJOS_Filterlist = ageTeamsPOJOS_list;
     }
 
     @NonNull
@@ -35,7 +39,7 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        AgeTeamsPOJO lp = ageTeamsPOJOS_list.get(position);
+        AgeTeamsPOJO lp = ageTeamsPOJOS_Filterlist.get(position);
         holder.tv_age_group.setText(lp.getAge_group().toString().trim());
         holder.tv_team_name.setText(lp.getTeam_name().toString().trim());
         holder.tv_team_contact.setText(lp.getMobile_institude().toString().trim());
@@ -44,7 +48,7 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return ageTeamsPOJOS_list.size();
+        return ageTeamsPOJOS_Filterlist.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +65,7 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     int itemPosition = getLayoutPosition();
-                    AgeTeamsPOJO teamsPOJO = ageTeamsPOJOS_list.get(itemPosition);
+                    AgeTeamsPOJO teamsPOJO = ageTeamsPOJOS_Filterlist.get(itemPosition);
                     String team_id = teamsPOJO.getId();
                     String team_name = teamsPOJO.getTeam_name();
                     String team_gender = teamsPOJO.getGender();
@@ -76,5 +80,46 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
                 }
             });
         }
+    }
+
+
+    public Filter getFilter() {
+
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+
+                String charString = charSequence.toString();
+
+                if (charString.isEmpty()) {
+
+                    ageTeamsPOJOS_Filterlist = ageTeamsPOJOS_list;
+                    //mFilteredList = mArrayList;
+                } else {
+
+                    ArrayList<AgeTeamsPOJO> filteredList = new ArrayList<>();
+
+                    for (AgeTeamsPOJO ageTeamsPOJOFilter : ageTeamsPOJOS_list) {
+
+                        if (ageTeamsPOJOFilter.getTeam_name().toLowerCase().contains(charString)) {
+
+                            filteredList.add(ageTeamsPOJOFilter);
+                        }
+                    }
+
+                    ageTeamsPOJOS_Filterlist = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = ageTeamsPOJOS_Filterlist;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                ageTeamsPOJOS_Filterlist = (ArrayList<AgeTeamsPOJO>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }

@@ -8,12 +8,48 @@
     android:layout_height="match_parent"
     tools:context=".activity.HomeActivity">
 
+    <RadioGroup
+        android:id="@+id/linear_top"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="3dp"
+        android:weightSum="2"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="In Complete"
+            android:checked="true"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:background="@drawable/radio_selector"
+            android:textColor="@color/black"
+            android:elevation="4dp"
+            android:layout_height="wrap_content"/>
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Completed"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:button="@android:color/transparent"
+            android:background="@drawable/radio_selector"
+            android:textColor="@color/black"
+            android:elevation="4dp"
+            android:layout_height="wrap_content"/>
+
+    </RadioGroup>
+
     <LinearLayout
         android:id="@+id/linear_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/linear_top"
         android:background="@drawable/dashboard_background"
         android:orientation="vertical"
         android:padding="10dp">
