@@ -4,30 +4,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="200dp"
     app:cardCornerRadius="10dp"
-    android:background="@color/white"
     android:layout_gravity="center"
     android:layout_height="180dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:orientation="vertical"
         android:gravity="center"
+        android:background="@color/colorPrimaryDark"
         android:layout_gravity="center"
         android:padding="5dp"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/app_loaders" />
+            android:src="@drawable/logo" />
 
-        <TextView
+        <ProgressBar
             android:layout_width="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:gravity="center"
-            android:text="Please Wait...."
             android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/calibri_regular"

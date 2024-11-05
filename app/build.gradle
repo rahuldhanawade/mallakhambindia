@@ -3,14 +3,14 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.rahuldhanawade.www.amarproject"
         minSdk 21
-        targetSdk 32
+        targetSdk 34
         versionCode 1
-        versionName "2.0"
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
