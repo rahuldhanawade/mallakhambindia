@@ -122,14 +122,13 @@
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
-                        app:boxStrokeColor="@color/colorAccent"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:background="@drawable/background_spinner">
 
                         <Spinner
                             android:id="@+id/spn_location"
@@ -138,7 +137,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="42dp" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 
