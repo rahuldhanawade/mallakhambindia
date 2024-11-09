@@ -1,7 +1,15 @@
 package com.rahuldhanawade.www.amarproject.Adapters;
 
 public class AgeTeamsPOJO {
-    String id;
+    String id,team_status;
+
+    public String getTeam_status() {
+        return team_status;
+    }
+
+    public void setTeam_status(String team_status) {
+        this.team_status = team_status;
+    }
 
     public String getId() {
         return id;

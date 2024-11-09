@@ -4,17 +4,21 @@ import static com.rahuldhanawade.www.amarproject.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastError;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -50,11 +54,12 @@ public class TeamDetails extends AppCompatActivity {
 
     private static final String TAG = TeamDetails.class.getSimpleName();
     LoadingDialog loadingDialog;
-    String Str_token = "", Str_year = "", str_team_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
+    String Str_token = "", Str_user_location = "", Str_year = "", str_team_id = "", str_team_status_id = "", str_team_name = "", str_team_gender = "", str_team_group = "";
     boolean is_back = true;
 
     SwipeRefreshLayout refreshLayout;
     TextView tv_players_empty,tv_plyr_count,tv_plyr_gender,tv_plyr_group;
+    LinearLayout linear_complete;
     RecyclerView recyclerView;
     TeamPlayersAdapter teamPlayersAdapter;
     ArrayList<TeamPlayersPOJO> teamPlayersPOJOArrayList = new ArrayList<>();
@@ -66,6 +71,7 @@ public class TeamDetails extends AppCompatActivity {
         setContentView(R.layout.activity_team_details);
 
         str_team_id = getIntent().getStringExtra("team_id");
+        str_team_status_id = getIntent().getStringExtra("team_status_id");
         str_team_name = getIntent().getStringExtra("team_name");
         str_team_gender = getIntent().getStringExtra("team_gender");
         str_team_group = getIntent().getStringExtra("team_group");
@@ -85,7 +91,7 @@ public class TeamDetails extends AppCompatActivity {
         });
 
         Str_token = UtilitySharedPreferences.getPrefs(getApplicationContext(),"token");
-
+        Str_user_location = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_location");
         init();
     }
 
@@ -96,6 +102,21 @@ public class TeamDetails extends AppCompatActivity {
         tv_plyr_count = findViewById(R.id.tv_plyr_count);
         tv_plyr_gender = findViewById(R.id.tv_plyr_gender);
         tv_plyr_group = findViewById(R.id.tv_plyr_group);
+
+        linear_complete = findViewById(R.id.linear_complete);
+
+        if(str_team_status_id.equals("1")){
+            linear_complete.setVisibility(View.VISIBLE);
+        }else{
+            linear_complete.setVisibility(View.GONE);
+        }
+
+        linear_complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showConfirmationDialog();
+            }
+        });
 
         tv_plyr_gender.setText(CommonMethods.getCapsSentences(str_team_gender));
         tv_plyr_group.setText(str_team_group);
@@ -124,6 +145,30 @@ public class TeamDetails extends AppCompatActivity {
         });
 
         UserLogin();
+    }
+
+    private void showConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Do you want to proceed?")
+                .setTitle("Confirmation")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+
+                // Set "No" button
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                       dialog.dismiss();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     public void UserLogin(){
@@ -186,6 +231,7 @@ public class TeamDetails extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("email", Str_email);
                 map.put("password", Str_password);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -316,6 +362,7 @@ public class TeamDetails extends AppCompatActivity {
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("team_id", str_team_id);
                 map.put("competition_year", Str_year);
+                map.put("location", Str_user_location);
                 Log.d("Getdata",""+map.toString());
                 return map;
             }

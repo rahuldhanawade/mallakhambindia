@@ -54,7 +54,7 @@ public class ScoreResultActivity extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_judgetype = "",Str_token = "",Str_year = "",set_comb = "";
+    String Str_judgetype = "",Str_user_location = "",Str_token = "",Str_year = "",set_comb = "";
     String score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String UnitAValue = "",UnitBValue = "",UnitCValue = "";
     boolean is_visible = true;
@@ -76,6 +76,7 @@ public class ScoreResultActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(ScoreResultActivity.this);
 
         Str_judgetype = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_type");
+        Str_user_location = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_location");
 
         score_id = getIntent().getStringExtra("score_id");
         player_id = getIntent().getStringExtra("player_id");
@@ -270,6 +271,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                 map.put("player_id", player_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("competition_year", Str_year);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -418,6 +420,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                 map.put("team_id", team_id);
                 map.put("player_id", player_id);
                 map.put("competition_year", Str_year);
+                map.put("location", Str_user_location);
                 Log.d("GETAllPYRSCR_Param",""+map.toString());
                 return map;
             }
@@ -550,6 +553,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("gender", player_gender);
                 map.put("age_group", player_group);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -731,6 +735,7 @@ public class ScoreResultActivity extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("email", Str_email);
                 map.put("password", Str_password);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }

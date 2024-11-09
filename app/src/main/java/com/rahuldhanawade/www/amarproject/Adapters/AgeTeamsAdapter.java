@@ -42,7 +42,7 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
         AgeTeamsPOJO lp = ageTeamsPOJOS_Filterlist.get(position);
         holder.tv_age_group.setText(lp.getAge_group().toString().trim());
         holder.tv_team_name.setText(lp.getTeam_name().toString().trim());
-        holder.tv_team_contact.setText(lp.getMobile_institude().toString().trim());
+        holder.tv_team_contact.setText(lp.getMobile().toString().trim());
         holder.tv_team_gender.setText(lp.getGender());
     }
 
@@ -67,12 +67,14 @@ public class AgeTeamsAdapter extends RecyclerView.Adapter<AgeTeamsAdapter.ViewHo
                     int itemPosition = getLayoutPosition();
                     AgeTeamsPOJO teamsPOJO = ageTeamsPOJOS_Filterlist.get(itemPosition);
                     String team_id = teamsPOJO.getId();
+                    String team_status_id = teamsPOJO.getTeam_status();
                     String team_name = teamsPOJO.getTeam_name();
                     String team_gender = teamsPOJO.getGender();
                     String team_group = teamsPOJO.getAge_group();
                     Log.d("sta",""+team_id);
                     Intent i = new Intent(context, TeamDetails.class);
                     i.putExtra("team_id",team_id);
+                    i.putExtra("team_status_id",team_status_id);
                     i.putExtra("team_name",team_name);
                     i.putExtra("team_gender",team_gender);
                     i.putExtra("team_group",team_group);

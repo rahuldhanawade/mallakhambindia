@@ -76,7 +76,7 @@ public class ScoreForm extends AppCompatActivity {
 
     private LoadingDialog loadingDialog;
     private static final String TAG = ScoreForm.class.getSimpleName();
-    String Str_name = "",Str_judge_type = "",Str_token = "",Str_year = "",Str_score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
+    String Str_name = "",Str_judge_type = "",Str_user_location = "",Str_token = "",Str_year = "",Str_score_id = "",player_id = "",player_name = "",team_id = "",team_name = "",player_age = "",player_gender = "",player_group = "";
     String set_ele_A = "",set_ele_B = "",set_ele_C = "",set_comb = "",set_exec = "",set_orig = "";
     EditText edt_exec,edt_orig,edt_comments;
     TextView tv_judge_name,tv_plyr_name,tv_plyr_age,tv_plyr_goup,tv_plyr_gender;
@@ -106,6 +106,7 @@ public class ScoreForm extends AppCompatActivity {
         loadingDialog = new LoadingDialog(ScoreForm.this);
         Str_name = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_name");
         Str_judge_type = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_judge_type");
+        Str_user_location = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_location");
         Str_score_id = getIntent().getStringExtra("score_id");
         player_id = getIntent().getStringExtra("player_id");
         player_name = getIntent().getStringExtra("player_name");
@@ -473,6 +474,7 @@ public class ScoreForm extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("gender", player_gender);
                 map.put("age_group", player_group);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -758,6 +760,7 @@ public class ScoreForm extends AppCompatActivity {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("email", Str_email);
                 map.put("password", Str_password);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -861,6 +864,7 @@ public class ScoreForm extends AppCompatActivity {
                 map.put("player_id", player_id);
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
                 map.put("competition_year", Str_year);
+                map.put("location", Str_user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -1016,6 +1020,7 @@ public class ScoreForm extends AppCompatActivity {
                 map.put("originality", checkEmptyValue(edt_orig.getText().toString()));
                 map.put("total_score", checkEmptyValue(tv_final_value.getText().toString()));
                 map.put("comment", edt_comments.getText().toString());
+                map.put("location", Str_user_location);
                 Log.d("SubmitParamas",""+map.toString());
                 return map;
             }

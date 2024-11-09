@@ -9,7 +9,7 @@
     tools:context=".activity.HomeActivity">
 
     <RadioGroup
-        android:id="@+id/linear_top"
+        android:id="@+id/rg_main_top"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_margin="3dp"
@@ -17,10 +17,10 @@
         android:layout_height="wrap_content">
 
         <RadioButton
+            android:id="@+id/rb_in_compl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="In Complete"
-            android:checked="true"
             android:padding="10dp"
             android:layout_margin="10dp"
             android:gravity="center"
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"/>
 
         <RadioButton
+            android:id="@+id/rb_compl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="Completed"
@@ -49,7 +50,7 @@
         android:id="@+id/linear_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linear_top"
+        android:layout_below="@+id/rg_main_top"
         android:background="@drawable/dashboard_background"
         android:orientation="vertical"
         android:padding="10dp">

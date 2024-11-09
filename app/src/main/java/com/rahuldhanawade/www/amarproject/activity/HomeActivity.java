@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,7 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     BottomSheetDialog bottomSheetDialog;
     private LoadingDialog loadingDialog;
 
-    String Str_gender = "", Str_grp_gender = "";
+    String Str_gender = "", Str_grp_gender = "", Str_status = "";
     String Str_token = "", Str_year = "", Str_name = "", Str_username = "", Str_email = "", Str_mobile_no = "";
 
     TextView tv_teams_empty;
@@ -90,6 +91,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     AgeTeamsAdapter ageTeamsAdapter;
     ArrayList<AgeTeamsPOJO> AgeTeamsPOJOS_list = new ArrayList<>();
     AgeTeamsPOJO ageTeamsPOJO;
+    RadioGroup rg_main;
+    RadioButton rb_compl,rb_in_compl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +150,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void init(){
 
         showfilterdialogg();
+
+        rg_main = findViewById(R.id.rg_main_top);
+        rb_compl = findViewById(R.id.rb_compl);
+        rb_in_compl = findViewById(R.id.rb_in_compl);
+
+        rb_in_compl.setChecked(true);
+        Str_status = "0";
+
+        rg_main.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(R.id.rb_compl == checkedId){
+                    Str_status = "0";
+                    UserLogin();
+                }else if (R.id.rb_in_compl == checkedId){
+                    Str_status = "1";
+                    UserLogin();
+                }
+            }
+        });
 
         flt_fliter = findViewById(R.id.flt_fliter);
         flt_fliter.setOnClickListener(new View.OnClickListener() {
@@ -345,6 +368,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         String Str_email = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_email");
         String Str_password = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_password");
+        String user_location = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_location");
 
         loadingDialog.startLoadingDialog();
 
@@ -400,6 +424,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("email", Str_email);
                 map.put("password", Str_password);
+                map.put("location", user_location);
                 Log.d("LoginParamas",""+map.toString());
                 return map;
             }
@@ -413,6 +438,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void getTeamList() {
+
+        String user_location = UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_location");
 
         AgeTeamsPOJOS_list.clear();
 
@@ -438,19 +465,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                 JSONObject Teamsdataobj = data_array.getJSONObject(i);
                                 Log.d("Teamsdataobj",""+Teamsdataobj);
 
-                                ageTeamsPOJO = new AgeTeamsPOJO();
-                                ageTeamsPOJO.setId(Teamsdataobj.getString("id"));
-                                ageTeamsPOJO.setCompetition_year(Teamsdataobj.getString("competition_year"));
-                                ageTeamsPOJO.setUniq_id(Teamsdataobj.getString("uniq_id"));
-                                ageTeamsPOJO.setTeam_name(Teamsdataobj.getString("team_name"));
-                                ageTeamsPOJO.setEmail_institude(Teamsdataobj.getString("email_institude"));
-                                ageTeamsPOJO.setMobile_institude(Teamsdataobj.getString("mobile_institude"));
-                                ageTeamsPOJO.setCoach_name(Teamsdataobj.getString("coach_name"));
-                                ageTeamsPOJO.setEmail(Teamsdataobj.getString("email"));
-                                ageTeamsPOJO.setMobile(Teamsdataobj.getString("mobile"));
-                                ageTeamsPOJO.setGender(Teamsdataobj.getString("gender"));
-                                ageTeamsPOJO.setAge_group(Teamsdataobj.getString("age_group"));
-                                AgeTeamsPOJOS_list.add(ageTeamsPOJO);
+                                String TeamStatusId = Teamsdataobj.getString("team_status");
+                                if(TeamStatusId.equals(Str_status)){
+                                    ageTeamsPOJO = new AgeTeamsPOJO();
+                                    ageTeamsPOJO.setTeam_status(TeamStatusId);
+                                    ageTeamsPOJO.setId(Teamsdataobj.getString("id"));
+                                    ageTeamsPOJO.setCompetition_year(Teamsdataobj.getString("competition_year"));
+                                    ageTeamsPOJO.setUniq_id(Teamsdataobj.getString("uniq_id"));
+                                    ageTeamsPOJO.setTeam_name(Teamsdataobj.getString("team_name"));
+                                    ageTeamsPOJO.setCoach_name(Teamsdataobj.getString("coach_name"));
+                                    ageTeamsPOJO.setMobile(Teamsdataobj.getString("mobile"));
+                                    ageTeamsPOJO.setGender(Teamsdataobj.getString("gender"));
+                                    ageTeamsPOJO.setAge_group(Teamsdataobj.getString("age_group"));
+                                    AgeTeamsPOJOS_list.add(ageTeamsPOJO);
+                                }
 
                             }
 
@@ -525,6 +553,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 map.put("gender", Str_gender);
                 map.put("age_group", Str_grp_gender);
                 map.put("competition_year", Str_year);
+                map.put("location", user_location);
                 Log.d("Getdata",""+map.toString());
                 return map;
             }
