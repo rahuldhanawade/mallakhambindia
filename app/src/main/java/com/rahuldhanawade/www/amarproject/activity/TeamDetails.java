@@ -2,6 +2,7 @@ package com.rahuldhanawade.www.amarproject.activity;
 
 import static com.rahuldhanawade.www.amarproject.RestClient.RestClient.ROOT_URL;
 import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastError;
+import static com.rahuldhanawade.www.amarproject.Utils.CommonMethods.DisplayToastSuccess;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -105,7 +106,11 @@ public class TeamDetails extends AppCompatActivity {
 
         linear_complete = findViewById(R.id.linear_complete);
 
-        if(str_team_status_id.equals("1")){
+        if(str_team_status_id == null || str_team_status_id.isEmpty()){
+            str_team_status_id = "1";
+        }
+
+        if(str_team_status_id.equals("0")){
             linear_complete.setVisibility(View.VISIBLE);
         }else{
             linear_complete.setVisibility(View.GONE);
@@ -136,7 +141,7 @@ public class TeamDetails extends AppCompatActivity {
                     @Override
                     public void run() {
                         teamPlayersPOJOArrayList.clear();
-                        UserLogin();
+                        UserLogin(0);
                         teamPlayersAdapter.notifyDataSetChanged();
                         refreshLayout.setRefreshing(false);
                     }
@@ -144,7 +149,7 @@ public class TeamDetails extends AppCompatActivity {
             }
         });
 
-        UserLogin();
+        UserLogin(0);
     }
 
     private void showConfirmationDialog() {
@@ -155,6 +160,7 @@ public class TeamDetails extends AppCompatActivity {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        UserLogin(1);
                         dialog.dismiss();
                     }
                 })
@@ -171,7 +177,7 @@ public class TeamDetails extends AppCompatActivity {
         alert.show();
     }
 
-    public void UserLogin(){
+    public void UserLogin(int ApiCall){
 
         String Str_email = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_email");
         String Str_password = UtilitySharedPreferences.getPrefs(getApplicationContext(),"login_password");
@@ -199,7 +205,11 @@ public class TeamDetails extends AppCompatActivity {
                                 UtilitySharedPreferences.setPrefs(getApplicationContext(), "year", year);
                                 Str_token = token;
                                 Str_year = year;
-                                getTeamPlayerList();
+                                if(ApiCall == 1){
+                                    setTeamScoreStatus();
+                                }else{
+                                    getTeamPlayerList();
+                                }
                             }else{
                                 DisplayToastError(TeamDetails.this,"Sorry For the Inconvince please try again later..");
                             }
@@ -360,6 +370,99 @@ public class TeamDetails extends AppCompatActivity {
             protected Map<String, String> getParams () {
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("judge_id", UtilitySharedPreferences.getPrefs(getApplicationContext(),"user_id"));
+                map.put("team_id", str_team_id);
+                map.put("competition_year", Str_year);
+                map.put("location", Str_user_location);
+                Log.d("Getdata",""+map.toString());
+                return map;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + Str_token);
+                return headers;
+            }
+        } ;
+
+        RetryPolicy policy = new DefaultRetryPolicy(3000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(policy);
+        RequestQueue requestQueue = Volley.newRequestQueue(TeamDetails.this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void setTeamScoreStatus() {
+
+        loadingDialog.startLoadingDialog();
+
+        String setTeamScoreStatusURL=ROOT_URL+"update_team_status";
+
+        Log.d("urltest",""+setTeamScoreStatusURL);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, setTeamScoreStatusURL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                is_back = true;
+                loadingDialog.dismissDialog();
+                Log.d("Response",""+response);
+                if (response != null && response.length() > 0) {
+                    try {
+                        JSONObject jsonresponse = new JSONObject(response);
+                        String status = jsonresponse.getString("success");
+                        if(status.equals("")){
+                            String message = jsonresponse.getString("message");
+                            DisplayToastSuccess(TeamDetails.this,message);
+                            linear_complete.setVisibility(View.GONE);
+                            str_team_status_id = "1";
+                        }else {
+                            DisplayToastError(TeamDetails.this,"Something goes wrong. Please try again");
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else {
+                    DisplayToastError(TeamDetails.this,"Something goes wrong. Please try again");
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingDialog.dismissDialog();
+                if (error == null || error.networkResponse == null) {
+                    Log.d(TAG, "onErrorResponse: error");
+                    return;
+                }
+
+                String body;
+                //get response body and parse with appropriate encoding
+                try {
+                    body = new String(error.networkResponse.data,"UTF-8");
+                    Log.d(TAG, "errResponse: "+body);
+
+                } catch (UnsupportedEncodingException e) {
+                    // exception
+                    Log.d(TAG, "errResponse: UnsupportedEncodingException");
+                    e.printStackTrace();
+                }
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    DisplayToastError(TeamDetails.this,"Server is not connected to internet.");
+                } else if (error instanceof AuthFailureError) {
+                    DisplayToastError(TeamDetails.this,"Server couldn't find the authenticated request.");
+                } else if (error instanceof ServerError) {
+                    DisplayToastError(TeamDetails.this,"Server is not responding.Please try Again Later");
+                } else if (error instanceof NetworkError) {
+                    DisplayToastError(TeamDetails.this,"Your device is not connected to internet.");
+                } else if (error instanceof ParseError) {
+                    DisplayToastError(TeamDetails.this,"Parse Error (because of invalid json or xml).");
+                }
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams () {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("status", "1");
                 map.put("team_id", str_team_id);
                 map.put("competition_year", Str_year);
                 map.put("location", Str_user_location);

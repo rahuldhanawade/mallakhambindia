@@ -1,11 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AmarProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.AmarProject" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">#FFF</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <!-- Secondary brand color. -->
 <!--        <item name="colorSecondary">@color/teal_200</item>-->
 <!--        <item name="colorSecondaryVariant">@color/teal_700</item>-->

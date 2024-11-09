@@ -162,10 +162,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(R.id.rb_compl == checkedId){
-                    Str_status = "0";
+                    Str_status = "1";
                     UserLogin();
                 }else if (R.id.rb_in_compl == checkedId){
-                    Str_status = "1";
+                    Str_status = "0";
                     UserLogin();
                 }
             }
