@@ -74,8 +74,8 @@ public class LoginActivity extends AppCompatActivity {
         EdtPassword = findViewById(R.id.EdtPassword);
         Spnlocation = findViewById(R.id.spn_location);
 
-        Edt_Email.setText("umhsr@gmail.com");
-        EdtPassword.setText("test1234");
+//        Edt_Email.setText("umhsr@gmail.com");
+//        EdtPassword.setText("test1234");
 
         cirLoginButton = findViewById(R.id.cirLoginButton);
         cirLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +118,9 @@ public class LoginActivity extends AppCompatActivity {
     private boolean isValid() {
         boolean result = true;
 
-        if (!MyValidator.isValidEmail(Edt_Email)) {
+        if (!MyValidator.isValidField(Edt_Email)) {
             Edt_Email.requestFocus();
-            DisplayToastError(LoginActivity.this,"Please Enter Valid Email Id");
+            DisplayToastError(LoginActivity.this,"Please Enter Valid User Id");
             result = false;
         }
 
